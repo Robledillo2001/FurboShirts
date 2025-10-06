@@ -1,0 +1,23 @@
+
+<script>
+    function sinAsync() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("Datos obtenidos con Promesas");
+      }, 2000);
+    });
+  }
+
+  function getData() {
+    sinAsync()
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        
+        console.error("Error:", error);
+      });
+  }
+
+  getData();
+</script>

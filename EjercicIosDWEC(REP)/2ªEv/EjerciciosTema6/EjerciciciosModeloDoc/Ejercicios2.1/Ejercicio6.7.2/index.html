@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ejemplo DOM - aprenderaprogramar</title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <section id="s1">
+    <h1 id="titulo">¿Quién soy?</h1>
+    <p>Uno <input type="button" value="eliminar"/></p>
+    <p>Dos <input type="button" value="eliminar"/></p>
+    <p>Tres <input type="button" value="eliminar"/></p>
+    <p>Cuatro <input type="button" value="eliminar"/></p>
+    <p>Cinco <input type="button" value="eliminar"/></p>
+  </section>
+
+  <script>
+    // Seleccionamos todos los botones "eliminar"
+    const botones = document.querySelectorAll('input[type="button"][value="eliminar"]');
+    
+    botones.forEach(boton => {
+      boton.addEventListener('click', (event) => {
+        let parrafoActual = event.target.parentNode; // <p> que contiene el botón
+        let parrafoSuperior = parrafoActual.previousElementSibling; // Párrafo superior
+        
+        // Si existe un párrafo anterior, lo eliminamos
+        if (parrafoSuperior && parrafoSuperior.tagName.toLowerCase() === 'p') {
+          parrafoSuperior.remove();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

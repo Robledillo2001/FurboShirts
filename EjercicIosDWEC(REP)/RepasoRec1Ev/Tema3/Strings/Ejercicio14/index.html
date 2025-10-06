@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Ejercicio1</title>
+    </head>
+    <body>
+        <script>
+           let cadena=prompt("Escriba una cadena")
+
+           let caracter1=prompt("Escriba una letra")
+           let caracter2=prompt("Escriba otra letra")
+
+           while(caracter1.length>1&&caracter2.length>1){
+                if(caracter1.length===1&&caracter2===1){
+                    console.log("Caracteres agregados");
+                    break;
+                }
+           }
+
+            cadena=cadena.replace(caracter1,caracter2)
+            console.log(cadena);
+        </script>
+    </body>
+</html>

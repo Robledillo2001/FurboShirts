@@ -1,0 +1,27 @@
+a {
+  color: white;
+}
+
+a:hover {
+  color: #fff;
+  background-color: #f90;
+}
+
+h1 {
+  color: #f90;
+  font-size: 180%;
+  font-weight: normal;
+}
+
+#contenido {
+  transition: margin-left .4s;
+  padding: 1rem;
+}
+
+#abrir {
+  display: block;
+}
+
+#cerrar {
+  display: none; /* Agregado para evitar errores en el código proporcionado */
+}

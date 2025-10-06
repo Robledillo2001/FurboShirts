@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Evento Window</title>
+    </head>
+    <body>
+        <h1>Control de Ventana</h1>
+        <button id="crearVentana">Crear Ventana</button><br>
+        <button id="incrementar">Incrementar</button><br>
+        <button id="decrementar">Decrementar</button><br>
+        <button id="arriba">Arriba</button><br>
+        <button id="izquierda">Izquierda</button>
+        <button id="derecha">Derecha</button><br>
+        <button id="abajo">Abajo</button>
+
+        <script>
+            let ventana = {};
+
+            function crearContenido(){
+                ventana.ref.document.write(`
+                        <html>
+                            <head>
+                                <title>Ventana Secundaria</title>
+                                <style>
+                                    body {
+                                        font-family: Arial, sans-serif;
+                                        background-color: #f0f0f0;
+                                        color: #333;
+                                        text-align: center;
+                                        padding: 20px;
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <h1>Hola desde la ventana secundaria!</h1>
+                                <p>Este es un contenido dinámico agregado con JavaScript.</p>
+                            </body>
+                        </html>
+                    `);
+            }
+
+            document.getElementById("crearVentana").addEventListener("click", () => {
+                if (!ventana.ref || ventana.ref.closed) {
+                    ventana.ref = window.open("", "", "width=200,height=200,top=300,left=300");
+                    crearContenido();
+                } else {
+                    ventana.ref.focus();
+                }
+            });
+
+            document.getElementById("incrementar").addEventListener("click", () => {
+                if (ventana.ref && !ventana.ref.closed) {
+                    const ancho = ventana.ref.outerWidth + 10;
+                    const largo = ventana.ref.outerHeight + 10;
+
+                    ventana.ref.resizeTo(ancho, largo);
+                    ventana.ref.focus();
+                }
+            });
+
+            document.getElementById("decrementar").addEventListener("click", () => {
+                if (ventana.ref && !ventana.ref.closed) {
+                    const ancho = Math.max(ventana.ref.outerWidth - 10, 100);
+                    const largo = Math.max(ventana.ref.outerHeight - 10, 100);
+
+                    ventana.ref.resizeTo(ancho, largo);
+                    ventana.ref.focus();
+                }
+            });
+
+            document.getElementById("arriba").addEventListener("click", () => {
+                if (ventana.ref && !ventana.ref.closed) {
+                    const top = Math.max(ventana.ref.screenY - 10, 0);
+                    ventana.ref.moveTo(ventana.ref.screenX, top);
+                    ventana.ref.focus();
+                }
+            });
+
+            document.getElementById("abajo").addEventListener("click", () => {
+                if (ventana.ref && !ventana.ref.closed) {
+                    const top = ventana.ref.screenY + 10;
+                    ventana.ref.moveTo(ventana.ref.screenX, top);
+                    ventana.ref.focus();
+                }
+            });
+
+            document.getElementById("derecha").addEventListener("click", () => {
+                if (ventana.ref && !ventana.ref.closed) {
+                    const left = ventana.ref.screenLeft + 10;
+                    ventana.ref.moveTo(left, ventana.ref.screenTop);
+                    ventana.ref.focus();
+                }
+            });
+
+            document.getElementById("izquierda").addEventListener("click", () => {
+                if (ventana.ref && !ventana.ref.closed) {
+                    const left = Math.max(ventana.ref.screenLeft - 10, 0);
+                    ventana.ref.moveTo(left, ventana.ref.screenTop);
+                    ventana.ref.focus();
+                }
+            });
+        </script>
+    </body>
+</html>

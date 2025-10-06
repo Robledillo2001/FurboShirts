@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Ejercicio1</title>
+    </head>
+    <body>
+        <script>
+            let texto = prompt("Escribe una cadena");
+            
+            let caracter=prompt("Escriba un caracter");
+            while(caracter.length>1||caracter.length<=0){
+                if(caracter.length===1){
+                    console.log("Caracter elegido")
+                }else{
+                    console.log("Error") 
+                }
+            }
+            let contador=0;
+            for(let i=0;i<texto.length;i++){
+                if(texto[i]===caracter){
+                    contador++
+                }
+            }
+            console.log(`Caracteres ${caracter} encontrados: ${contador}`);
+        </script>
+    </body>
+</html>

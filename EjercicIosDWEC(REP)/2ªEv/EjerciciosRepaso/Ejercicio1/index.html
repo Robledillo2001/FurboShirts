@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Redimensionar Ventana</title>
+</head>
+<body>
+    <form action="">
+        <label for="porcentaje">Porcentaje</label>
+        <input type="number" id="porcentaje" min="1" max="100"><br>
+        <p id="datos"></p>
+        <button type="button" id="redimensionar">Redimensionar</button>
+        <button type="button" id="crearVentana">Crear Nueva Ventana</button>
+    </form>
+    <script>
+        let porcentaje = document.getElementById("porcentaje");
+        let redimensionar = document.getElementById("redimensionar");
+        let crearVentana = document.getElementById("crearVentana");
+        let datos = document.getElementById("datos");
+        let ventana = {}; 
+
+        function crearContenido() {
+            if (ventana.ref) {
+                ventana.ref.document.open();
+                ventana.ref.document.write(`
+                    <html>
+                        <head>
+                            <title>Ventana Secundaria</title>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    background-color: #f0f0f0;
+                                    color: #333;
+                                    text-align: center;
+                                    padding: 20px;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <h1>Hola desde la ventana secundaria!</h1>
+                            <p>Este es un contenido dinámico agregado con JavaScript.</p>
+                        </body>
+                    </html>
+                `);
+                ventana.ref.document.close();
+            }
+        }
+
+        crearVentana.addEventListener("click", () => {
+            if (!ventana.ref || ventana.ref.closed) {
+                ventana.ref = window.open("", "", "width=200,height=200,top=300,left=300");
+                if (ventana.ref) {
+                    crearContenido();
+                } else {
+                    datos.textContent = "No se pudo abrir la ventana. Es posible que el navegador la haya bloqueado.";
+                }
+            } else {
+                ventana.ref.focus();
+            }
+        });
+
+        redimensionar.addEventListener("click", () => {
+            let valorPorcentaje = parseFloat(porcentaje.value);
+
+            if (isNaN(valorPorcentaje) || valorPorcentaje <= 0 || valorPorcentaje > 100) {
+                datos.textContent = "Por favor, introduce un porcentaje válido (entre 1 y 100).";
+                return;
+            }
+
+            if (!ventana.ref || ventana.ref.closed) {
+                datos.textContent = "Primero debes crear una ventana antes de redimensionarla.";
+                return;
+            }
+
+            let confirmacion = confirm(`¿Estás seguro de que quieres redimensionar la ventana al ${valorPorcentaje}%?`);
+            if (!confirmacion) {
+                datos.textContent = "Redimensionamiento cancelado.";
+                return;
+            }
+
+            let anchoActual = window.innerWidth;
+            let altoActual = window.innerHeight;
+            let nuevoAncho = Math.max(100, anchoActual * (valorPorcentaje / 100));
+            let nuevoAlto = Math.max(100, altoActual * (valorPorcentaje / 100));
+
+            try {
+                ventana.ref.resizeTo(nuevoAncho, nuevoAlto);
+                datos.textContent = `Ventana redimensionada al ${valorPorcentaje}%. Nuevo tamaño: ${nuevoAncho.toFixed(0)}x${nuevoAlto.toFixed(0)}px`;
+            } catch (error) {
+                datos.textContent = "No se pudo redimensionar la ventana. Algunos navegadores bloquean esta función por seguridad.";
+            }
+        });
+    </script>
+</body>
+</html>

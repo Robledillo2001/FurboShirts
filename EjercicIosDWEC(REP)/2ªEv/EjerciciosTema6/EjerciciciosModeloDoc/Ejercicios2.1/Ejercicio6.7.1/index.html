@@ -1,0 +1,28 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>Ejemplo DOM - aprenderaprogramar</title> 
+        <meta charset="utf-8"> </head> 
+    <body> 
+        <section id="s1"> 
+            <h1 id="titulo">¿Quién soy?</h1> 
+            <p>Uno<input type="button" value="eliminar"/></p> 
+            <p>Dos<input type="button" value="eliminar"/></p> 
+            <p>Tres<input type="button" value="eliminar"/></p>
+            <p>Cuatro<input type="button" value="eliminar"/></p> 
+            <p>Cinco<input type="button" value="eliminar"/></p> 
+        </section>
+
+        <script>
+            let botones=document.querySelectorAll('input[type="button"][value="eliminar"]');
+
+            // Añadimos el listener usando una función normal
+            botones.forEach(function(boton) {
+            boton.addEventListener('click', function() {
+                // 'this' se refiere al botón, por lo que this.parentNode es el <p>
+                this.parentNode.remove();
+                });
+            });
+        </script>
+    </body> 
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Redimensionar Ventana</title>
+</head>
+<body>
+    <h1>Enlaces</h1>
+    <p id="mensaje"></p>
+    <a href="https://www.youtube.com/" id="enlace1">Enlace1</a><br>
+    <a id="enlace2" href="https://sarreplec.caib.es/pluginfile.php/11225/mod_resource/content/1/DWES05_v1/ArchivosUnidad/Moodle/DWES05_Contenidos/152_herencia_ii.html">Enlace2</a>
+    <script>
+        setTimeout(()=>{
+            let enlace1=document.getElementById("enlace1");
+            if(enlace1){
+                enlace1.remove();
+                document.getElementById("mensaje").textContent="Primer enlace eliminado"
+            }
+            setTimeout(()=>{
+                let enlace2=document.getElementById("enlace2");
+                if(enlace2){
+                    enlace2.remove();
+                    document.getElementById("mensaje").textContent="Segundo enlace eliminado:("
+                }
+            },10000);
+        },5000);
+    </script>
+</body>
+</html>

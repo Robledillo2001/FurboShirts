@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Campos Obligatorios</title>
+    <style>
+        .formulario {
+            max-width: 400px;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .campo {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .mensaje {
+            color: #666;
+            font-size: 0.8em;
+            height: 18px;
+            margin-top: 3px;
+            transition: opacity 0.3s;
+        }
+
+        .obligatorio {
+            border-left: 3px solid #4CAF50;
+            padding-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <form class="formulario">
+        <!-- Campo obligatorio 1 -->
+        <div class="campo">
+            <label for="nombre" class="obligatorio">Nombre*</label>
+            <input type="text" id="nombre" required>
+            <div class="mensaje" id="mensaje-nombre"></div>
+        </div>
+
+        <!-- Campo obligatorio 2 -->
+        <div class="campo">
+            <label for="email" class="obligatorio">Email*</label>
+            <input type="email" id="email" required>
+            <div class="mensaje" id="mensaje-email"></div>
+        </div>
+
+        <!-- Campo opcional -->
+        <div class="campo">
+            <label for="comentario">Comentario</label>
+            <textarea id="comentario"></textarea>
+        </div>
+    </form>
+
+    <script>
+        // Seleccionar todos los campos obligatorios
+        const camposObligatorios = document.querySelectorAll('input[required]');
+
+        // Función para manejar los eventos
+        function manejarFoco(event) {
+            const mensajeId = `mensaje-${event.target.id}`;
+            const mensaje = document.getElementById(mensajeId);
+            
+            if (event.type === 'focus') {
+                mensaje.textContent = 'Este campo es obligatorio';
+                mensaje.style.color = '#4CAF50';
+            } else if (event.type === 'blur') {
+                mensaje.textContent = '';
+                
+                // Validación adicional al perder el foco
+                if (!event.target.value) {
+                    mensaje.textContent = 'Campo requerido';
+                    mensaje.style.color = '#f44336';
+                }
+            }
+        }
+
+        // Añadir eventos a cada campo obligatorio
+        camposObligatorios.forEach(campo => {
+            campo.addEventListener('focus', manejarFoco);
+            campo.addEventListener('blur', manejarFoco);
+        });
+    </script>
+</body>
+</html>

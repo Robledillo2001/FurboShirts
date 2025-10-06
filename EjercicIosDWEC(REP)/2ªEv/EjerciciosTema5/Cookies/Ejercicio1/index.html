@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saludo Cookie</title>
+</head>
+<body>
+    <form action="" id="form">
+        <label for="Nombre">Nombre</label>
+        <input type="text" id="Nombre">
+        <button id="enviar">Enviar</button>
+    </form>
+
+    <div id="saludo"style="display: none;">
+        <p id="p"></p>
+        <button id="eliminar">Eliminar</button>
+    </div>
+    <script>
+        let nombre=document.getElementById("Nombre");
+        let enviar=document.getElementById("enviar");
+        let form=document.getElementById("form");
+        let saludo=document.getElementById("saludo");
+        let eliminar=document.getElementById("eliminar");
+
+        enviar.addEventListener("click",()=>{
+            let fechaCAD=new Date()
+            fechaCAD.setTime(fechaCAD.getTime()+1000*60*60*24*7)
+            if(nombre.value!==""){
+                document.cookie = `nombre=${nombre.value};expires=${fechaCAD.toUTCString()};path=/`;
+            }else{
+                alert("El nombre no puede estar vacio");
+            }
+        });
+
+        eliminar.addEventListener("click",()=>{
+            document.cookie="nombre=;expires=Sat, 01 Jan 2000 00:00:01 GMT";
+            form.style.display="block";
+            saludo.style.display="none";
+        });
+
+        // Mostrar saludo si ya existe una cookie
+        window.onload = () => {
+            let arrayCookie = document.cookie.split(";");
+            for (let cookie of arrayCookie) {
+                let [cookieNombre, valor] = cookie.split("=");
+                if (cookieNombre.trim() === "nombre") {
+                    p.textContent = `Hola ${valor}`;
+                    saludo.style.display = "block";
+                    form.style.display = "none";
+                    break;
+                }
+            }
+        };
+    </script>
+</body>
+</html>

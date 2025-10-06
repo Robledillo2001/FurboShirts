@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evento Window</title>
+</head>
+<body>
+    <h1>Ventana lado</h1>
+    <button id="crear">Crear Ventana</button>
+    <button id="parar">Parar Movimiento</button>
+    <button id="cerrar">Cerrar Ventana</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let crear = document.getElementById("crear");
+            let parar = document.getElementById("parar");
+            let cerrar = document.getElementById("cerrar");
+
+            let ventana;
+            let direccion = 1;
+            let intervalo;
+            let posicionIzq = 500;
+
+            function balancearVentana() {
+                clearInterval(intervalo); // Evita múltiples intervalos simultáneos
+                intervalo = setInterval(() => {
+                    if (!ventana || ventana.closed) {
+                        clearInterval(intervalo);
+                        return;
+                    }
+
+                    posicionIzq += direccion * 10;
+                    ventana.moveTo(posicionIzq, 300);
+
+                    if (posicionIzq >= 600 || posicionIzq <= 400) {
+                        direccion *= -1;
+                    }
+                }, 100);
+            }
+
+            crear.addEventListener("click", () => {
+                if (!ventana || ventana.closed) {
+                    ventana = window.open("", "", "width=400,height=300,left=500,top=300");
+
+                    if (ventana) {
+                        setTimeout(() => {
+                            ventana.document.write(`
+                                <html>
+                                    <head><title>Ventana en Movimiento</title></head>
+                                    <body>
+                                        <h2>Ventana Moviéndose</h2>
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", () => {
+                                                document.body.innerHTML += "<p>Lista para moverse</p>";
+                                            });
+                                        <\/script>
+                                    </body>
+                                </html>
+                            `);
+                            ventana.document.close(); // Asegurar que la escritura del documento termine correctamente.
+
+                            posicionIzq = 500; // Restablece la posición inicial
+                            balancearVentana();
+                        }, 1000); // Esperar un poco para asegurar que la ventana esté lista
+                    }
+                }
+            });
+
+            parar.addEventListener("click", () => {
+                clearInterval(intervalo);
+            });
+
+            cerrar.addEventListener("click", () => {
+                if (ventana) {
+                    ventana.close();
+                    clearInterval(intervalo);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

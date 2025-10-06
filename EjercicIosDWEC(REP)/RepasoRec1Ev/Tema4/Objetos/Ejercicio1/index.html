@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Ejercicio1</title>
+    </head>
+    <body>
+        <script>
+            /*function Jugador(nombre){
+                this.nombre=nombre;
+                this.fuerza=0;
+
+                this.incrementarFuerza=function(){
+                    this.fuerza+=1;
+                }
+
+                this.consultarFuerza=function(){
+                    return this.fuerza;
+                }
+            }
+            let jugador=new Jugador("Ruben");
+            console.log(jugador.consultarFuerza())
+            jugador.incrementarFuerza()
+            jugador.incrementarFuerza()
+            jugador.incrementarFuerza()
+            console.log(jugador.consultarFuerza())*/
+
+            class Jugador{
+                constructor(nombre,fuerza=0){
+                    this.nombre=nombre;
+                    this.fuerza=fuerza;
+                }
+                incrementarFuerza(){
+                    this.fuerza++;
+                }
+
+                mostrarFuerza(){
+                    return this.fuerza;
+                }
+            }
+
+            let jugador=new Jugador("Ruben");
+            console.log(jugador.mostrarFuerza())
+            jugador.incrementarFuerza()
+            jugador.incrementarFuerza()
+            jugador.incrementarFuerza()
+            console.log(jugador.mostrarFuerza())
+        </script>
+    </body>
+</html>

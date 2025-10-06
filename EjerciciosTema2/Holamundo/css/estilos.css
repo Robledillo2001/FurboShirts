@@ -1,0 +1,16 @@
+body {
+    background-color: black; /* Establece el color de fondo a negro */
+    color: white; /* Establece el color del texto a blanco */
+    font-family: Arial, sans-serif; /* Cambia la fuente a Arial */
+    text-align: center; /* Centra el texto */
+    margin-top: 50px; /* Agrega un margen superior */
+}
+
+h1 {
+    font-size: 2.5em; /* Tamaño de fuente para encabezados */
+    margin-bottom: 20px; /* Margen inferior para separación */
+}
+
+p {
+    font-size: 1.2em; /* Tamaño de fuente para párrafos */
+}

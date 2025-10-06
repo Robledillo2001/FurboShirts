@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Correo</title>
+    <style>
+        a {
+            margin: 10px;
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function crearCookie(nombre) {
+            let expiracion = new Date("2026-02-24"); // Formato correcto: aaaa-mm-dd
+            document.cookie = `nombre=${nombre};expires=${expiracion.toUTCString()}`;
+        }
+
+        function borrarCookie() {
+            let expiracion = new Date();
+            expiracion.setTime(expiracion.getTime() - 1000); // 1 segundo en el pasado
+            document.cookie = `nombre=;expires=${expiracion.toUTCString()}`;
+        }
+
+        function recorrerCookie() {
+            let cookies = document.cookie.split(";");
+            cookies.forEach(cookie => {
+                let [clave, valor] = cookie.split("=");
+                console.log(`Cookie con clave "${clave.trim()}" y valor "${valor}"`);
+            });
+        }
+
+        // Uso
+        crearCookie("Ruben");
+        recorrerCookie();
+        borrarCookie();
+    </script>
+
+</body>
+</html>

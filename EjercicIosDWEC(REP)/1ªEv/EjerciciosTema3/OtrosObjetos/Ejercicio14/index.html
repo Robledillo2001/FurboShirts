@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pares o nones</title>
+    <link rel="stylesheet" href="../Ejercicio14/CSS/estilo.css">
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th colspan="2"><h2>PIEDRA, PAPEL O TIJERA</h2>
+            </th>
+            <th colspan="1"><h2>ELIGE TU JUGADA</h2></th>
+        </tr>
+        <tr>
+            <td><img src="IMG/piedra.PNG" id="piedra"></td>
+            <td><img src="IMG/papel.PNG" id="papel"></td>
+            <td><img src="IMG/tijeras.PNG" id="tijeras"></td>
+           
+        </tr>
+        <tr>
+            <td><h2>TU SELECCION</h2>
+                <img id="imagenElegida"src=""></img>
+            </td>
+            
+            <td><input type="button" value="Jugar" id="Jugar"></td>
+            <td><h2>Tu Oponente</h2>
+                <img id="imagenOponente"src=""></img>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3"> 
+                <h2 id="textoResultado"></h2>
+                <img src="" id="imagenResultado"><img>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript" src="Scripts/Juego.js"></script>
+</body>
+</html>

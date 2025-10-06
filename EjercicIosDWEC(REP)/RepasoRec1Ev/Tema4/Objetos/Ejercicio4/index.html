@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>Ejercicio1</title>
+    </head>
+    <body>
+        <script>
+            function Persona(edad){
+                this.edad=edad
+            }
+
+            Persona.prototype.getEdad=function(){
+                return this.edad
+            }
+
+            Persona.prototype.setEdad=function(edad){
+                this.edad=edad
+            }
+
+            function Cine(){
+                this.personas=[];
+
+                let personasAl=Math.floor(Math.random()*50)+5
+                for(let i=0;i<personasAl;i++){
+                    let edadAl=Math.floor(Math.random()*60)+5
+                    this.personas.push(new Persona(edadAl))
+                }
+            }
+
+            Cine.prototype.calcularPrecios = function() {
+                let total = 0;
+                let resultados = [];
+
+                for (let i = 0; i < this.personas.length; i++) {
+                    let edad = this.personas[i].edad;
+                    let precio = 0;
+
+                    if (edad >= 5 && edad <= 10) {
+                        precio = 2;
+                    } else if (edad >= 11 && edad <= 17) {
+                        precio = 4;
+                    } else if (edad >= 18) {
+                        precio = 6;
+                    }
+
+                    total += precio;
+                    resultados.push(`Edad: ${edad} Precio=${precio} €`);
+                }
+
+                resultados.push(`Total=${total} €`);
+                return resultados; // ✅ Ahora devuelve todos los datos en un array
+            };
+
+            let cine = new Cine();
+            let precios = cine.calcularPrecios();
+            console.log(precios.join(",\t")); // Para imprimir los resultados correctamente
+        </script>
+    </body>
+</html>

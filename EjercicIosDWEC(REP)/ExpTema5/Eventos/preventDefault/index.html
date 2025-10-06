@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo preventDefault()</title>
+</head>
+<body>
+    <a id="enlace">Enlcae</a>
+    <script>
+        // Obtener el elemento del enlace por su ID
+        const enlace = document.getElementById("enlace");
+
+        // Agregar event listener para el click
+        enlace.addEventListener("click", function(evento) {
+            // Prevenir el comportamiento por defecto (navegación automática)
+            evento.preventDefault();
+            
+            // Mostrar confirmación al usuario
+            const confirmacion = confirm("¿Realmente desea abandonar esta página?");
+            
+            // Si el usuario confirma, redirigir manualmente
+            if (confirmacion) {
+                window.location.href = "https://es.wikipedia.org/";
+            }
+        });
+    </script>
+</body>
+</html>

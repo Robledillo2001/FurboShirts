@@ -1,0 +1,66 @@
+<html>
+<head>
+    <title>Ejercicio 1</title>
+</head>
+<body>
+    <form id="form">
+        <h1>Crear nueva Ventana</h1>
+        <button type="submit">Crear Ventana</button><br>
+        <label for="porcentaje">Porcentaje a redimensionar</label>
+        <input type="number" id="porcentaje" value="10" min="1"><br>
+        <button type="button" id="redimensionar">Redimensionar</button><br>
+        <button type="reset">Borrar Ventana</button>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let form = document.getElementById("form");
+            let porcentaje = document.getElementById("porcentaje");
+            let redimensionar = document.getElementById("redimensionar");
+
+            let ancho = 600;
+            let alto = 400;
+            let nuevaVentana = null;
+
+            form.addEventListener("submit", (ev) => {
+                ev.preventDefault();
+                nuevaVentana = window.open(
+                    "",
+                    "_blank",
+                    `width=${ancho},height=${alto}`
+                );
+
+                nuevaVentana.document.write("<h1>Ventana creada para redimensionarla como querais</h1>")
+                console.log("Ventana Creada");
+            });
+
+            form.addEventListener("reset", (ev) => {
+                ev.preventDefault();
+                if (nuevaVentana && !nuevaVentana.closed) {
+                    nuevaVentana.close();
+                    console.log("Ventana Borrada");
+                } else {
+                    console.log("No hay ventana abierta para cerrar.");
+                }
+            });
+
+            redimensionar.addEventListener("click", () => {
+                const valor = parseFloat(porcentaje.value);
+                if (!isNaN(valor) && valor > 0) {
+                    ancho += ancho * (valor / 100);
+                    alto += alto * (valor / 100);
+                    if (nuevaVentana && !nuevaVentana.closed) {
+                        nuevaVentana.resizeTo(ancho, alto);
+                        nuevaVentana.focus();
+                        console.log(`Ventana redimensionada a ${ancho} x ${alto}`);
+                    } else {
+                        console.log("La ventana no está abierta.");
+                    }
+                } else {
+                    console.log("Introduce un porcentaje válido (> 0)");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Correo</title>
+    <style>
+        a {
+            margin: 10px;
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="formulario">
+        <label for="control">Control1</label>
+        <input type="email" id="control"><br>
+
+        <label for="control">Control2</label>
+        <input type="email" ><br>
+
+        <label for="control2">Control3</label>
+        <input type="email" id="control"><br>
+        
+        <button type="submit">Enviar</button>
+    </form>
+    <h1 id="mensaje"></h1>
+    <script>
+        let controles=document.querySelectorAll("#control");
+
+        controles.forEach(control => {
+            control.addEventListener("focus",()=>{
+                document.getElementById("mensaje").innerHTML="Ganando foco"
+            });
+
+            control.addEventListener("blur",()=>{
+                document.getElementById("mensaje").innerHTML="Se perdio el foco del control"
+            });
+        });
+    </script>
+
+</body>
+</html>

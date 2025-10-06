@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulación de Array</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 10px;
+        }
+        input, button, textarea {
+            margin: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manipulación de Array</h1>
+
+    <!-- Cuadro de texto -->
+    <input type="text" id="inputText" placeholder="Introduce un valor">
+
+    <!-- Botones -->
+    <button onclick="addToStart()">Añadir al principio</button>
+    <button onclick="addToEnd()">Añadir al final</button>
+    <button onclick="removeFromStart()">Extraer del principio</button>
+    <button onclick="removeFromEnd()">Extraer del final</button>
+
+    <h3>Array Actual:</h3>
+    <!-- Área de texto donde se mostrará el array -->
+    <textarea id="outputArea" readonly></textarea>
+
+    <script>
+        // Inicializar un array vacío
+        let array = [];
+
+        // Función para añadir al principio del array
+        function addToStart() {
+            const input = document.getElementById('inputText').value;
+            if(input) {
+                array.unshift(input);  // Añadir al principio
+                document.getElementById('inputText').value = '';  // Limpiar el cuadro de texto
+                updateArrayDisplay();  // Actualizar la visualización del array
+            }
+        }
+
+        // Función para añadir al final del array
+        function addToEnd() {
+            const input = document.getElementById('inputText').value;
+            if(input) {
+                array.push(input);  // Añadir al final
+                document.getElementById('inputText').value = '';  // Limpiar el cuadro de texto
+                updateArrayDisplay();  // Actualizar la visualización del array
+            }
+        }
+
+        // Función para extraer del principio
+        function removeFromStart() {
+            if(array.length > 0) {
+                const removedElement = array.shift();  // Eliminar del principio
+                document.getElementById('inputText').value = removedElement;  // Mostrar el elemento extraído en el cuadro de texto
+                updateArrayDisplay();  // Actualizar la visualización del array
+            }
+        }
+
+        // Función para extraer del final
+        function removeFromEnd() {
+            if(array.length > 0) {
+                const removedElement = array.pop();  // Eliminar del final
+                document.getElementById('inputText').value = removedElement;  // Mostrar el elemento extraído en el cuadro de texto
+                updateArrayDisplay();  // Actualizar la visualización del array
+            }
+        }
+
+        // Función para actualizar el área de texto con el contenido del array
+        function updateArrayDisplay() {
+            document.getElementById('outputArea').value = array.join(', ');  // Mostrar el array en el área de texto
+        }
+    </script>
+</body>
+</html>

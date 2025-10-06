@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Lista de tareas</title>
+  <style>
+    h1 {
+    font-weight: 700;
+    text-align: center;
+    color: teal;
+    font-size: 3em;
+    }
+
+    input {
+    width: 85%;
+    height: 56px;
+    font-size: 1.8em;
+    padding-left: 0.5em;
+    border-radius: 10px 0 0 10px;
+    border: 1px solid brown;
+    outline: none;
+    color: brown;
+    text-align: left;
+    float: left;
+    }
+
+    button {
+    width: 10%;
+    height: 60px;
+    font-size: 2em;
+    color: white;
+    font-weight: 700;
+    background-color: brown;
+    border-radius: 0 10px 10px 0;
+    border: none;
+    outline: none;
+    }
+
+    button:hover {
+    background-color: red;
+    }
+
+    li {
+    font-size: 2em;
+    color: teal;
+    margin-bottom: 0.5em;
+    }
+
+    a {
+    text-decoration: none;
+    background-color: brown;
+    border-radius: 10px;
+    color: white;
+    padding-left: 0.5em;
+    margin-left: 1em;
+    padding-right: 0.5em;
+    font-size: 0.5em;
+    }
+
+    a:hover {
+    background-color: red;
+    color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lista de tareas</h1>
+  <form>
+    <input type="text" id="tarea" placeholder="Nueva tarea">
+    <button id="mas">+</button>
+  </form>
+  <div>
+    <ul id="lista"></ul>
+  </div>
+
+  <script>
+    let tarea=document.getElementById("tarea");
+    let mas=document.getElementById("mas");
+    let lista=document.getElementById("lista");
+    let li=document.getElementsByTagName("a");
+
+
+    mas.addEventListener("click",(ev)=>{
+      ev.preventDefault();
+      let textoTarea=tarea.value;
+
+      let li=document.createElement("li");
+      lista.appendChild(li);
+
+      let span=document.createElement("span");
+      li.appendChild(span);
+      span.textContent=textoTarea;
+      
+      let quitar=document.createElement("a");
+      quitar.textContent="Quitar";
+      li.appendChild(quitar);
+      
+      quitar.addEventListener("click",(ev)=>{
+        ev.preventDefault();
+        lista.removeChild(li);
+      });
+
+      tarea.value="";
+    })
+
+  </script>
+
+</body>
+</html>

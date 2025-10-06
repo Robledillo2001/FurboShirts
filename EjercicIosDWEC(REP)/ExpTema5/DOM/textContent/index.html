@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejemplo DOM - aprenderaprogramar</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <main>
+        <h1>Sistema Solar</h1>
+        
+        <h2>Sol</h2>
+        <p id="pSol">
+            El Sol, una estrella de tipo espectral <strong>G2</strong> que contiene más del 99,85% de la masa del sistema.
+            Con un diámetro de 1 400 000 km. Se compone de un 75% de hidrógeno, un 20% de helio y un 5% de oxígeno, carbono,
+            hierro y otros elementos.
+        </p>
+        
+        <h2>Planetas</h2>
+        <p id="pPlanetas">
+            Los planetas, divididos en planetas interiores (también llamados terrestres o telurios) y planetas exteriores o gigantes.
+            Entre estos últimos <strong>Júpiter</strong> y <strong>Saturno</strong> se denominan gigantes gaseosos, mientras que
+            Urano y Neptuno suelen nombrarse gigantes helados. Todos los planetas gigantes tienen a su alrededor anillos.
+        </p>
+    </main>
+    <script>
+        console.log(document.getElementById("pSol").textContent);
+    </script>
+</body>
+</html>

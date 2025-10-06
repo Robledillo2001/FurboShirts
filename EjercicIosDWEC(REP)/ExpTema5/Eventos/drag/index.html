@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo Drag and Drop</title>
+    <style>
+        #contenedor {
+            display: flex;
+            gap: 20px;
+        }
+        #origen, #destino {
+            width: 200px;
+            height: 200px;
+            border: 2px dashed #333;
+            padding: 10px;
+        }
+        #origen {
+            background-color: #f0f0f0;
+        }
+        #destino {
+            background-color: #e0e0e0;
+        }
+        .item {
+            width: 180px;
+            height: 50px;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            cursor: grab;
+        }
+        .item.dragging {
+            opacity: 0.5;
+        }
+        #log {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 150px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejemplo Drag and Drop</h1>
+    
+    <div id="contenedor">
+        <div id="origen">
+            <div class="item" draggable="true">Elemento 1</div>
+            <div class="item" draggable="true">Elemento 2</div>
+        </div>
+        <div id="destino"></div>
+    </div>
+    
+    <div id="log"></div>
+    
+    <script>
+        const origen = document.getElementById('origen');
+        const destino = document.getElementById('destino');
+        const log = document.getElementById('log');
+        let elementoArrastrado = null;
+        
+        // Función para registrar eventos en el log
+        function registrarEvento(evento, elemento) {
+            log.innerHTML += `${new Date().toLocaleTimeString()}: ${evento} en ${elemento}<br>`;
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        // Eventos del elemento que se arrastra (origen)
+        document.querySelectorAll('.item').forEach(item => {
+            // dragstart: Cuando empieza el arrastre
+            item.addEventListener('dragstart', function(e) {
+                elementoArrastrado = this;
+                this.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', this.textContent);
+                registrarEvento('dragstart', 'elemento origen');
+            });
+            
+            // drag: Durante el arrastre
+            item.addEventListener('drag', function() {
+                registrarEvento('drag', 'elemento origen');
+            });
+            
+            // dragend: Cuando termina el arrastre
+            item.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+                registrarEvento('dragend', 'elemento origen');
+                elementoArrastrado = null;
+            });
+        });
+        
+        // Eventos del elemento destino
+        // dragenter: Cuando el elemento entra en el destino
+        destino.addEventListener('dragenter', function(e) {
+            e.preventDefault();
+            this.style.borderColor = 'red';
+            registrarEvento('dragenter', 'destino');
+        });
+        
+        // dragover: Cuando el elemento se mueve sobre el destino
+        destino.addEventListener('dragover', function(e) {
+            e.preventDefault(); // Necesario para permitir el drop
+            this.style.backgroundColor = '#f5f5f5';
+            registrarEvento('dragover', 'destino');
+        });
+        
+        // dragleave: Cuando el elemento sale del destino
+        destino.addEventListener('dragleave', function() {
+            this.style.borderColor = '#333';
+            this.style.backgroundColor = '#e0e0e0';
+            registrarEvento('dragleave', 'destino');
+        });
+        
+        // drop: Cuando se suelta el elemento en el destino
+        destino.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#333';
+            this.style.backgroundColor = '#e0e0e0';
+            
+            if (elementoArrastrado) {
+                // Clonamos el elemento para dejar el original en su lugar
+                const clon = elementoArrastrado.cloneNode(true);
+                clon.classList.remove('dragging');
+                this.appendChild(clon);
+                registrarEvento('drop', 'destino');
+            }
+        });
+    </script>
+</body>
+</html>

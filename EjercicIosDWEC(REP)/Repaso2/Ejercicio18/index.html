@@ -1,0 +1,22 @@
+
+<script>
+  let promesa=new Promise((resolve,reject)=>{
+    resolve("Paso 1: Promesa resuelta correctamente");
+  });
+  promesa
+    .then(mensaje1 => {
+    console.log(mensaje1);
+    return "Paso 2: Segundo mensaje tras la primera resolución";
+  })
+  .then(mensaje2 => {
+    console.log(mensaje2);
+    return "Paso 3: Tercer mensaje tras el segundo paso";
+  })
+  .then(mensaje3 => {
+    console.log(mensaje3);
+  })
+  .catch(error => {
+    console.error("Error:", error);
+  });
+
+</script>

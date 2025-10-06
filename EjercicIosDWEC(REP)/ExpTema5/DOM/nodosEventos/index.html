@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo NODOS con Drag</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      width: 300px;
+    }
+
+    li {
+      background: #f0f0f0;
+      margin: 5px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      cursor: move;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .drag-over {
+      border: 2px dashed #4CAF50;
+    }
+
+    button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="formulario">
+    <label for="elemento">Nombre Elemento</label>
+    <input type="text" id="elemento">
+    <button type="submit">Enviar</button>
+  </form>
+
+  <h1>Elementos</h1>
+  <ul id="lista">
+    <li draggable="true" id="li-1">Elemento 1 <button id="eliminarPrimero">Eliminar</button></li>
+  </ul>
+
+  <script>
+    const formulario = document.getElementById("formulario");
+    const elemento = document.getElementById("elemento");
+    const lista = document.getElementById("lista");
+    const botonEliminarPrimero = document.getElementById("eliminarPrimero");
+
+    let idCounter = 2; // Para IDs únicos
+
+    botonEliminarPrimero.addEventListener("click", () => {
+      if (lista.firstElementChild) {
+        lista.removeChild(lista.firstElementChild);
+      }
+    });
+
+    
+    formulario.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const texto = elemento.value.trim();
+      if (texto === "") return;
+
+      const nuevoLi = document.createElement("li");
+      nuevoLi.setAttribute("draggable", "true");
+      nuevoLi.id = "li-" + idCounter++;
+      nuevoLi.textContent = texto + " ";
+
+      const btn = document.createElement("button");
+      btn.textContent = "Eliminar";
+      nuevoLi.appendChild(btn);
+      lista.appendChild(nuevoLi);
+
+      btn.addEventListener("click", () => {
+        lista.removeChild(nuevoLi);
+      });
+
+      añadirDrag(nuevoLi);
+      elemento.value = "";
+      elemento.focus();
+    });
+
+    // Drag & Drop interno
+    let liArrastrado = null;
+
+    function añadirDrag(elemento) {
+      // Cuando se inicia el arrastre del elemento
+      elemento.addEventListener("dragstart", (e) => {
+        liArrastrado = elemento; // Guardamos el elemento que se está arrastrando
+        e.dataTransfer.effectAllowed = "move"; // Indicamos que la operación será mover
+      });
+
+      // Cuando un elemento se arrastra sobre otro (para permitir soltarlo)
+      elemento.addEventListener("dragover", (e) => {
+        e.preventDefault(); // Necesario para permitir el drop
+        liArrastrado.classList.add("drag-over"); // Añadimos clase visual para indicar destino posible
+      });
+
+      // Cuando el elemento arrastrado sale del área del otro elemento
+      elemento.addEventListener("dragleave", () => {
+        liArrastrado.classList.remove("drag-over"); // Quitamos la clase visual
+      });
+
+      elemento.addEventListener("drop", (e) => {
+        e.preventDefault();
+        liArrastrado.classList.remove("drag-over");
+
+        if (liArrastrado && liArrastrado !== elemento) {
+          const esAntes = liArrastrado.compareDocumentPosition(elemento) & Node.DOCUMENT_POSITION_FOLLOWING;
+
+          if (esAntes) {
+            // El arrastrado está antes, insertamos después
+            lista.insertBefore(liArrastrado, elemento.nextSibling);
+          } else {
+            // El arrastrado está después, insertamos antes
+            lista.insertBefore(liArrastrado, elemento);
+          }
+        }
+      });
+
+
+      // Cuando termina el arrastre (haya sido exitoso o cancelado)
+      elemento.addEventListener("dragend", () => {
+        liArrastrado = null; // Limpiamos la variable temporal
+      });
+    }
+     // Inicializar drag para los elementos existentes
+    document.querySelectorAll("#lista li").forEach(añadirDrag);
+  </script>
+
+</body>
+</html>

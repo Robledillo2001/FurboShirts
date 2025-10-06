@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Correo</title>
+    <style>
+        div {
+            margin: 10px;
+            cursor: pointer;
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <form id="formulario">
+        <label></label>
+        <input type="number" id="nota">
+        <button type="submit">Enviar</button>
+    </form>
+    <script>
+        let formulario=document.getElementById("formulario");
+
+        let nota=document.getElementById("nota");
+
+        formulario.addEventListener("submit",(ev)=>{
+            ev.preventDefault();
+            try{
+                if(nota.value < 0 || nota.value > 10){
+                    throw("No se puede añadir la nota");
+                }
+                console.log(nota.value);
+            }catch(error){
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>

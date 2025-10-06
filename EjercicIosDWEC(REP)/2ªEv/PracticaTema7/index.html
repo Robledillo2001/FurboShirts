@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de Países por Idioma con Gráfico</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <!-- Incluir Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Buscar Países por Idioma</h1>
+  <form id="form">
+    <label for="lenguaje">Escribe un idioma (en inglés, por ejemplo: "Spanish"):</label>
+    <input type="text" id="lenguaje" placeholder="Ej: Spanish" required />
+    <button type="submit">Buscar</button><br>
+    <a href="aciertaElPais.html">Juego de acertar paises</a><br>
+    <button id="cerrarSesion">Cerrar Sesion</button>
+  </form>
+
+  <!-- Tabla para mostrar los datos -->
+  <table id="tablaPais">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Capital</th>
+        <th>Población</th>
+        <th>Región</th>
+        <th>Moneda</th>
+        <th>Bandera</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Los datos se insertarán aquí dinámicamente -->
+    </tbody>
+  </table>
+
+  <!-- Gráfico de población -->
+  <h2>Gráfico de Población</h2>
+  <canvas id="graficoPoblacion"></canvas>
+  <script src="Script/paises.js"></script>
+</body>
+</html>

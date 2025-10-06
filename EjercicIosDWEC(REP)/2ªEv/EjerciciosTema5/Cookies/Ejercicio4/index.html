@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        label {
+            width: 150px;
+            float: left;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 150px;
+            float: left;
+            margin-bottom: 5px;
+        }
+        fieldset {
+            background: #66CCCC;
+            width: 350px;
+            border: thick solid #306;
+        }
+        legend {
+            border: medium solid;
+            background-color: #FFF;
+        }
+        #mensajes {
+            float: left;
+            background: #33FF33;
+            width: 325px;
+        }
+        #errores {
+            float: left;
+            background: #FF6633;
+            width: 325px;
+        }
+        #intentos {
+            float: left;
+            background: #CCFF33;
+            width: 325px;
+        }
+        .error {
+            border: solid 2px #FF0000;
+        }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend>Validacion Formulario</legend>
+        <form name="formulario" id="formulario" action="http://www.google.es" method="get">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" />
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" name="apellidos" id="apellidos" />
+            <label for="edad">Edad:</label>
+            <input name="edad" type="text" id="edad" maxlength="3" />
+            <label for="nif">NIF:</label>
+            <input name="nif" type="text" id="nif" />
+            <label for="email">E-mail:</label>
+            <input name="email" type="text" id="email" />
+            <label for="provincia">Provincia:</label>
+            <select name="provincia" id="provincia">
+                <option value="0" selected="selected">Seleccione Provincia</option>
+                <option value="C">A Coruña</option>
+                <option value="LU">Lugo</option>
+                <option value="OU">Ourense</option>
+                <option value="OU">Pontevedra</option>
+            </select>
+            <label for="fecha">Fecha Nacimiento:</label>
+            <input name="fecha" type="text" id="fecha" />
+            <label for="telefono">Teléfono:</label>
+            <input name="telefono" type="text" id="telefono" maxlength="9" />
+            <label for="hora">Hora de visita:</label>
+            <input name="hora" type="text" id="hora" />
+            <input type="reset" name="limpiar" id="button" value="Limpiar" />
+            <input type="submit" name="enviar" id="enviar" value="Enviar" />
+        </form>
+        <div id="errores"></div>
+        <div id="intentos"></div>
+    </fieldset>
+    <div id="parrafoSaludo"></div>
+    <script>
+        let form = document.getElementById("formulario");
+        let errores = document.getElementById("errores");
+        let intentos = document.getElementById("intentos");
+
+        let nombre = document.getElementById("nombre");
+        let apellidos = document.getElementById("apellidos");
+        let edad = document.getElementById("edad");
+        let nif = document.getElementById("nif");
+        let provincia = document.getElementById("provincia");
+        let fecha = document.getElementById("fecha");
+        let telefono = document.getElementById("telefono");
+        let hora = document.getElementById("hora");
+        let limpiar = document.getElementById("button");
+        let enviar = document.getElementById("enviar");
+
+        function crearCookie(nombre, apellidos, edad, nif, provincia, telefono, hora) {
+            let fechaCAD = new Date();
+            fechaCAD.setTime(fechaCAD.getTime() + 1000 * 60 * 60 * 24 * 7);
+            let intent = 0;
+            let err = 0;
+
+            if (nombre.value === "") {
+                nombre.classList.add("error");
+                err++;
+            } else {
+                nombre.classList.remove("error");
+            }
+
+            if (apellidos.value === "") {
+                apellidos.classList.add("error");
+                err++;
+            } else {
+                apellidos.classList.remove("error");
+            }
+
+            if (edad.value === "" || isNaN(edad.value)) {
+                edad.classList.add("error");
+                err++;
+            } else {
+                edad.classList.remove("error");
+            }
+
+            if (nif.value === "") {
+                nif.classList.add("error");
+                err++;
+            } else {
+                nif.classList.remove("error");
+            }
+
+            if (provincia.value === "0") {
+                provincia.classList.add("error");
+                err++;
+            } else {
+                provincia.classList.remove("error");
+            }
+
+            if (fecha.value === "") {
+                fecha.classList.add("error");
+                err++;
+            } else {
+                fecha.classList.remove("error");
+            }
+
+            if (telefono.value === "" || isNaN(telefono.value)) {
+                telefono.classList.add("error");
+                err++;
+            } else {
+                telefono.classList.remove("error");
+            }
+
+            if (hora.value === "") {
+                hora.classList.add("error");
+                err++;
+            } else {
+                hora.classList.remove("error");
+            }
+
+            if (err > 0) {
+                errores.textContent = `Errores: ${err}`;
+                intentos.textContent = `Intentos: ${++intent}`;
+            } else {
+                document.cookie = `nombre=${nombre.value};apellidos=${apellidos.value};edad=${edad.value};nif=${nif.value};telefono=${telefono.value};hora=${hora.value};expires=${fechaCAD.toUTCString()}`;
+                intentos.textContent = `Intentos: ${intent}`;
+                errores.textContent = "";
+                formulario.style.display = "none";
+            }
+        }
+
+        enviar.addEventListener("click", function(event) {
+            event.preventDefault();
+            crearCookie(nombre, apellidos, edad, nif, provincia, telefono, hora);
+        });
+
+        function eliminarCookie() {
+            document.cookie = `nombre=;apellidos=;edad=;nif=;telefono=;hora=;expires=Sat, 01 Jan 2000 00:00:01 GMT`;
+            formulario.style.display = "block";
+            errores.style.display = "none";
+            intentos.style.display = "none";
+        }
+
+        limpiar.addEventListener("click", function(event) {
+            event.preventDefault();
+            eliminarCookie();
+        });
+
+        window.onload = () => {
+            let arrayCookie = document.cookie.split(";");
+            let nombre = "";
+            let contadorValor = "";
+
+            for (let cookie of arrayCookie) {
+                let [clave, valor] = cookie.split("=");
+                if (clave.trim() === "nombre") {
+                    nombre = valor;
+                } else if (clave.trim() === "contador") {
+                    contadorValor = valor;
+                }
+            }
+
+            if (nombre) {
+                document.getElementById("parrafoSaludo").textContent = `Bienvenido ${nombre} (Visitas: ${contadorValor})`;
+                saludo.style.display = "block";
+                form.style.display = "none";
+            }
+        };
+    </script>
+</body>
+</html>

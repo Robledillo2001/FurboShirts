@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mostrar Poesía</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2em;
+      background: #f4f4f4;
+    }
+    pre {
+      background: #fff;
+      padding: 1em;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+    }
+    #error {
+      color: red;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Poesía desde el servidor</h1>
+  <pre>Cargando...</pre>
+  <div id="error"></div>
+
+  <script>
+    let pre = document.querySelector("pre");
+    let capaError = document.getElementById("error");
+
+    async function peticion() {
+      try {
+        const resp = await fetch("https://jorgesanchez.net/servicios/poesia.php");
+
+        if (!resp.ok) {
+          throw new Error(`Error ${resp.status}: ${resp.statusText}`);
+        }
+
+        const texto = await resp.text();
+        pre.textContent = texto;
+        capaError.textContent = ""; // Limpiar errores si la petición fue exitosa
+      } catch (error) {
+        capaError.textContent = "Ocurrió un error al cargar la poesía: " + error.message;
+        pre.textContent = ""; // Limpiar el contenido en caso de error
+        console.error(error);
+      }
+    }
+
+    peticion();
+  </script>
+
+</body>
+</html>

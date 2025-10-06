@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>10 Usuarios aleatorios</title>
+    <style>
+        *{
+            font-family: sans-serif;
+        }
+        main{
+            text-align: center;
+        }
+        main div{
+            display:inline-block;
+            padding:.3em;
+        }
+        main div:nth-of-type(odd){
+            background-color: lightgray;
+        }
+        main div:hover{
+            background-color:rgb(88, 230, 230);
+        }
+        p{
+            margin:0;
+        }
+        .error{
+            background-color:red;
+            color:white;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <main id="contenedor-usuarios">
+        <p>Cargando...</p>
+    </main>
+    <script src="Scripts/script.js"></script>
+</body>
+</html>

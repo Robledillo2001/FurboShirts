@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coordenadas del Evento</title>
+    <style>
+        #teclainfo {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #ff0766;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-family: monospace;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div id="teclainfo">
+    Pulsa un boton para ver los datos de la tecla pulsada...
+</div>
+
+<script>
+    const info = document.getElementById("teclainfo");
+
+    document.addEventListener("keydown", function(event) {
+        info.innerHTML = `
+            <strong>Tecla pulsada:</strong> ${event.key} <br>
+            <strong>Código físico:</strong> ${event.code} <br>
+            <strong>Código numérico:</strong> ${event.keyCode}
+        `;
+    });
+</script>
+
+</body>
+</html>

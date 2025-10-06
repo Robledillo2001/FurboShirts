@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo Promesas</title>
+</head>
+<body>
+  <script>
+    let promesaResuelta = Promise.resolve("✅ Todo salió bien");
+
+    promesaResuelta.then(resultado => {
+      console.log("Resultado:", resultado); // Resultado: ✅ Todo salió bien
+    });
+
+    let promesaRechazada = Promise.reject("❌ Algo falló");
+
+    promesaRechazada.catch(error => {
+      console.error("Error:", error); // Error: ❌ Algo falló
+    });
+
+    const promesa1 = new Promise(resolve => {
+      setTimeout(() => resolve("✅ Tarea 1 completada"), 5000);
+    });
+
+    const promesa2 = new Promise(resolve => {
+      setTimeout(() => resolve("✅ Tarea 2 completada"), 2000);
+    });
+
+    const promesa3 = new Promise(resolve => {
+      setTimeout(() => resolve("✅ Tarea 3 completada"), 1500);
+    });
+
+    Promise.all([promesa1, promesa2, promesa3])
+      .then(resultados => {
+        console.log("Todas las tareas completadas:");
+        console.log(resultados); 
+        // ["✅ Tarea 1 completada", "✅ Tarea 2 completada", "✅ Tarea 3 completada"]
+      })
+      .catch(error => {
+        console.error("Una tarea falló:", error);
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Correo</title>
+    <style>
+        a {
+            margin: 10px;
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="formulario">
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <a href="#" id="enviar">Enviar</a>
+        <a href="#" id="borrar">Borrar</a>
+    </form>
+
+    <script>
+        const formulario = document.getElementById("formulario");
+        const email = document.getElementById("email");
+        const enviar = document.getElementById("enviar");
+        const borrar = document.getElementById("borrar");
+
+        function correoValido(valor) {
+            // Verifica que contenga al menos una arroba y un punto, y algo antes y después
+            return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(valor);
+        }
+
+        enviar.addEventListener("click", (e) => {
+            e.preventDefault();
+            formulario.dispatchEvent(new Event("submit"));
+        });
+
+
+        borrar.addEventListener("click", (e) => {
+            e.preventDefault();
+            formulario.dispatchEvent(new Event("reset"));
+        });
+
+        formulario.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const valorCorreo = email.value.trim();
+
+            if (correoValido(valorCorreo)) {
+                alert("Correo enviado correctamente.");
+            } else {
+                alert("Por favor, introduce un correo válido.");
+            }
+        });
+
+        formulario.addEventListener("reset",(ev)=>{
+            ev.preventDefault();
+            alert("Formulario reiniciado");
+        });
+    </script>
+
+</body>
+</html>

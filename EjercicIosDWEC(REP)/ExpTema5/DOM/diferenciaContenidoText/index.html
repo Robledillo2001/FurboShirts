@@ -1,0 +1,13 @@
+<div id="demo1"></div>
+<div id="demo2"></div>
+
+<script>
+  const div1 = document.getElementById("demo1");
+  const div2 = document.getElementById("demo2");
+
+  // Usando textContent
+  div1.textContent = "<strong>Hola Mundo</strong>";//En la pagina no interpreta las etiquetas HTML y nos las mostrara exactamente en la salida
+
+  // Usando innerHTML
+  div2.innerHTML = "<strong>Hola Mundo</strong>";//Interpreta las etiquetas mostrando el texto en negrita
+</script>

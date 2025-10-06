@@ -1,0 +1,21 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>Ejemplo DOM - aprenderaprogramar</title> 
+        <meta charset="utf-8"> 
+    </head> 
+    <body> 
+        <main id="principal"> 
+            <p>Soy el primer párrafo</p> 
+            <p>Soy el segundo párrafo</p> 
+            <p>Soy el tercer párrafo</p> 
+        </main> 
+        <script> 
+            let capa=document.getElementById("principal"); 
+            let nuevoP=document.createElement("p"); 
+            nuevoP.textContent="Soy el nuevo párrafo"; 
+            let pPosterior=document.getElementsByTagName("p"); 
+            capa.insertBefore(nuevoP,capa.children[1]); 
+        </script> 
+    </body>
+</html>

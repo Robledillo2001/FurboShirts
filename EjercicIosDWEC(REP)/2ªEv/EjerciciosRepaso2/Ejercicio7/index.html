@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Campos Obligatorios</title>
+</head>
+<body>
+    <script>
+        function setCookie(fecha,nombre){
+            document.cookie=`nombre=${nombre}; expires=${fecha.toUTCString()}`;
+        }
+
+        function eliminarCookie(){
+            let fecha =new Date();
+            fecha.setFullYear(1999,5,24);
+            document.cookie=`nombre=;expires=${fecha.toUTCString()}
+            `
+        }
+
+        function getCookie(){
+            let arrayCookies=document.cookie.split(";");
+
+            for(let cookie of arrayCookies){
+                let [clave,valor]=cookie.split("=");
+                console.log(valor)
+            }
+        }
+
+        let fecha =new Date();
+        fecha.setFullYear(2025,5,24);
+        setCookie(fecha,"Ruben");
+
+        getCookie();
+
+        eliminarCookie();
+
+        getCookie();
+    </script>
+</body>
+</html>

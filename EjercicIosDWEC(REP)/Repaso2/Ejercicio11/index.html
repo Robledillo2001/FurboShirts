@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario con enlaces como botones</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .boton-enlace {
+      display: inline-block;
+      padding: 8px 16px;
+      margin: 5px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .boton-enlace:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Formulario de Correo</h2>
+
+  <form id="correoForm">
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" name="email" required>
+    <br><br>
+    <a href="#" class="boton-enlace" id="enviarBtn">Enviar</a>
+    <a href="#" class="boton-enlace" id="resetBtn">Reiniciar</a>
+  </form>
+
+  <script>
+    const form = document.getElementById("correoForm");
+    const emailInput = document.getElementById("email");
+
+    document.getElementById("enviarBtn").addEventListener("click", function (e) {
+      e.preventDefault(); // evita que el enlace se comporte como tal
+      const email = emailInput.value;
+
+      if (email.includes("@")) {
+        alert("Formulario enviado correctamente.");
+        form.submit();
+      } else {
+        alert("El correo debe contener una '@'.");
+        emailInput.focus();
+      }
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", function (e) {
+      e.preventDefault(); // evita el comportamiento por defecto del enlace
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>

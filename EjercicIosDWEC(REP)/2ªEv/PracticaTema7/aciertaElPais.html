@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AciertaElPaís</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+        }
+        #game {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        img {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #score {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        a{
+            text-decoration: none;
+            background-color: cornflowerblue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <img id="flag" src="" alt="Bandera del país">
+        <div id="country-buttons"></div>
+        <div id="score">Puntuación: 0</div>
+        <a href="index.html">Buscar Paises por idioma</a>
+        <button id="cerrarSesion">Cerrar Sesion</button>
+    </div>
+</body>
+<script src="./script/aciertaElPais.js"></script>
+</html>

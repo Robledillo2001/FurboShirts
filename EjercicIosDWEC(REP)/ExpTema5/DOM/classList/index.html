@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo classList</title>
+  <style>
+    .rojo { color: red; }
+    .verde { color: green; }
+    .azul { color: blue; }
+    .negrita { font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <p id="miTexto">Hola, soy un texto</p>
+
+  <button onclick="agregarClase()">Add</button>
+  <button onclick="quitarClase()">Remove</button>
+  <button onclick="alternarClase()">Toggle</button>
+  <button onclick="verificarClase()">Contains</button>
+  <button onclick="reemplazarClase()">Replace</button>
+
+  <script>
+    const texto = document.getElementById("miTexto");
+
+    function agregarClase() {
+      texto.classList.add("rojo", "negrita");
+    }
+
+    function quitarClase() {
+      texto.classList.remove("rojo");
+    }
+
+    function alternarClase() {
+      texto.classList.toggle("azul"); // Añade si no está, quita si ya está
+    }
+
+    function verificarClase() {
+      if (texto.classList.contains("verde")) {
+        alert("El texto tiene la clase 'verde'");
+      } else {
+        alert("El texto NO tiene la clase 'verde'");
+      }
+    }
+
+    function reemplazarClase() {
+      texto.classList.replace("rojo", "verde");
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejemplo preventDefault()</title>
+</head>
+<body>
+    <div id="contenedor" style="padding: 20px; border: 2px solid blue;">
+        <button id="boton">Haz clic aquí</button>
+    </div>
+    
+    <div id="mensaje" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+    <button id="reset">Resetear mensajes</button>
+    <script>
+        const contenedor = document.getElementById("contenedor");
+        const boton = document.getElementById("boton");
+        const mensaje = document.getElementById("mensaje");
+        const resetBtn = document.getElementById("reset");
+
+        // Evento en el contenedor (burbujeo)
+        contenedor.addEventListener("click", () => {
+            mensaje.innerHTML += "Click en el contenedor<br>";
+        });
+
+        // Evento en el botón con stopPropagation
+        boton.addEventListener("click", function(evento) {
+            evento.stopPropagation(); // Detiene la propagación hacia arriba
+            mensaje.innerHTML += "Click en el botón<br>";
+            
+            // Ejemplo adicional: podríamos agregar más lógica aquí
+            // this.style.backgroundColor = "lightblue";
+        });
+
+        // Botón para resetear mensajes
+        resetBtn.addEventListener("click", () => {
+            mensaje.innerHTML = "Mensajes reseteados<br>";
+        });
+    </script>
+</body>
+</html>

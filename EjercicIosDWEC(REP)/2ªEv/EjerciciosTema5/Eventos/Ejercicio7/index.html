@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visor de imágenes</title>
+  <style>
+    * { margin: auto; padding: 0; text-align: center; } 
+    #cabecera { font: bold 1.3em verdana; background-color: #feffe4; } 
+    h1 { text-align: center ; padding: 0.5em ; }
+    #menu { float: left; width: 25%; background-color: #e3f2ff; }
+    #menu img { width: 35%; margin: 5%; cursor: pointer; }
+    #principal { float: left; width: 75%; } 
+    #visor { width: 60%; margin: 10%; } #visor img { width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="cabecera">
+    <h1>Visor de imágenes</h1>
+  </div>
+  
+  <div id="menu">
+    <img id="Imagen1" src='imagenesEjercicio7/foto1.jpg' alt='1. India - Agra - El Taj Majal.' name='fotos1' onclick="cambiarImagen('imagenesEjercicio7/foto1.jpg', '1. India - Agra - El Taj Majal.')"/>
+    <img id="Imagen2" src='imagenesEjercicio7/foto2.jpg' alt='2. Albania - Region de Ballsh.' name='fotos2' onclick="cambiarImagen('imagenesEjercicio7/foto2.jpg', '2. Albania - Region de Ballsh.')"/>
+    <img id="Imagen3" src='imagenesEjercicio7/foto3.jpg' alt='3. Atenas- Partenón.' name='fotos3' onclick="cambiarImagen('imagenesEjercicio7/foto3.jpg', '3. Atenas- Partenón.')"/>
+    <img id="Imagen4" src='imagenesEjercicio7/foto4.jpg' alt='4. Bélgica - Amberes.' name='fotos4' onclick="cambiarImagen('imagenesEjercicio7/foto4.jpg', '4. Bélgica - Amberes.')"/>
+    <img id="Imagen5" src='imagenesEjercicio7/foto5.jpg' alt='5. Costa Rica - Parque nacional de la Amistad.' name='fotos5' onclick="cambiarImagen('imagenesEjercicio7/foto5.jpg', '5. Costa Rica - Parque nacional de la Amistad.')"/>
+    <img id="Imagen6" src='imagenesEjercicio7/foto6.jpg' alt='6. Egipto - Templo de Abu Simbel.' name='fotos6' onclick="cambiarImagen('imagenesEjercicio7/foto6.jpg', '6. Egipto - Templo de Abu Simbel.')"/>
+    <img id="Imagen7" src='imagenesEjercicio7/foto7.jpg' alt='7. España - Albacete ciudad.' name='fotos7' onclick="cambiarImagen('imagenesEjercicio7/foto7.jpg', '7. España - Albacete ciudad.')"/>
+    <img id="Imagen8" src='imagenesEjercicio7/foto8.jpg' alt='8. España - Tarragona - Acueducto romano.' name='fotos8' onclick="cambiarImagen('imagenesEjercicio7/foto8.jpg', '8. España - Tarragona - Acueducto romano.')"/>
+  </div>
+  
+  <div id="principal">
+    <div id="visor">
+      <img id="ImagenVisor" src='imagenesEjercicio7/foto1.jpg' alt='1. India - Agra - El Taj Majal.' name='fotoVisor'/>
+      <div id="titulo">1. India - Agra - El Taj Majal.</div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

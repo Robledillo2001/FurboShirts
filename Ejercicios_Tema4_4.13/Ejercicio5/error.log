@@ -1,0 +1,8 @@
+2024-12-09 19:04:40 - ERROR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'CODIGO_ART IN('4','33')' at line 1
+2024-12-09 19:05:48 - ERROR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'CODIGO_ART IN('4','33')' at line 1
+2024-12-09 19:06:56 - ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'curso_php.precio' doesn't exist
+2024-12-09 19:09:06 - ERROR: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2024-12-09 19:09:40 - ERROR: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2024-12-09 19:10:22 - ERROR: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2024-12-09 19:11:02 - ERROR: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2024-12-09 19:12:52 - ERROR: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
