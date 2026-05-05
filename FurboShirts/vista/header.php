@@ -19,10 +19,14 @@
     <link rel="stylesheet" href="assets/estilos/registro.css">
     <link rel="stylesheet" href="assets/estilos/Tienda.css">
     <link rel="stylesheet" href="assets/estilos/paginacion.css">
+    <link rel="stylesheet" href="assets/estilos/catalogo.css">
+    <link rel="stylesheet" href="assets/estilos/producto.css">
+    <link rel="stylesheet" href="assets/estilos/carrito.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <script src="assets/js/header.js"></script>
     <?php
         $rol_actual = $_SESSION['ROL'] ?? 'visitante';
         $foto_perfil = $_SESSION['IMAGEN'] ?? 'assets/img/user.png';
@@ -35,7 +39,12 @@
             </a>
         </div>
 
-        <nav class="nav-menu">
+        <!-- BOTÓN HAMBURGUESA (Nuevo) -->
+        <button class="menu-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <nav class="nav-menu" id="nav-menu">
             <?php if($rol_actual === 'admin'): ?>
                 <div class="nav-a">
                     <a href="index.php?action=MenuAdmin">Gestionar Tienda</a>
@@ -48,28 +57,33 @@
                     <a href="index.php?action=inicio">INICIO</a>
                 </div>
                 <div class="nav-a">
-                    <a href="index.php?action=Productos">PRODUCTOS</a> 
+                    <a href="index.php?action=mostrarCatalogo">PRODUCTOS</a> 
                 </div>
             <?php endif; ?>
         </nav>
 
         <div class="header-actions">
             <?php if($rol_actual !=='admin'):?>
-                <div class="search-bar">
-                    <input type="text" placeholder="Buscar...">
-                    <button><i class="fas fa-search"></i></button>
-                </div>
+                <form action="index.php" method="GET">
+                    <input type="hidden" name="action" value="mostrarCatalogo">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Buscar..." 
+                        name="nombre" 
+                        id="nombre"
+                        value="<?= htmlspecialchars($_GET['nombre'] ?? '')?>">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
             <?php endif;?>
             
             <div class="icons">
                 <?php if($rol_actual === 'admin'): ?>
                     <div class="dropdown">
                         <img src="<?=$foto_perfil ?>" alt="Perfil" class="img-perfil">
-
                         <div class="dropdown-content">
-                            <a href="index.php?action=configuracion">Configuracion</a>
-                            <a href="index.php?action=AnadirProducto">Añadir Producto </a>
-                            <a href="index.php?action=GestionProductos">Gestionar Productos</a>
+                            <a href="index.php?action=configuracion"><i class="fas fa-cog"></i> Configuración</a>
+                            <a href="index.php?action=AnadirProducto"><i class="fas fa-plus-circle"></i> Añadir Producto</a>
+                            <a href="index.php?action=GestionProductos"><i class="fas fa-tasks"></i> Gestionar Productos</a>
                         </div>
                     </div>
                     <a href="?action=logout" title="Cerrar Sesión"><i class="fas fa-sign-out-alt"></i></a>
@@ -77,16 +91,14 @@
                 <?php elseif($rol_actual === 'cliente'): ?>
                     <div class="dropdown">
                         <img src="<?=$foto_perfil ?>" alt="Perfil" class="img-perfil">
-
                         <div class="dropdown-content">
-                            <a href="index.php?action=configuracion">Configuracion</a>
-                            <a href="index.php?action=pedidos">Pedidos</a>
-                            <a href="index.php?action=valoraciones">Valoraciones</a>
+                            <a href="index.php?action=configuracion"><i class="fas fa-user-edit"></i> Configuración</a>
+                            <a href="index.php?action=VerPedidos"><i class="fas fa-box-open"></i> Mis Pedidos</a>
+                            <a href="index.php?action=Vervaloraciones"><i class="fas fa-star"></i> Valoraciones</a>
                         </div>
                     </div>
-                    <a href="?action=carrito"><i class="fas fa-shopping-cart"></i></a>
+                    <a href="?action=verCarrito"><i class="fas fa-shopping-cart"></i></a>
                     <a href="?action=logout" title="Cerrar Sesión"><i class="fas fa-sign-out-alt"></i></a>
-
                 <?php else: ?>
                     <a href="?action=login" title="Iniciar Sesión"><i class="fas fa-user"></i></a>
                 <?php endif; ?>
