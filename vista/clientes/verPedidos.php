@@ -46,7 +46,25 @@
                                 <td><?= htmlspecialchars($p['DIRECCION_ENVIO']) ?></td>
                                 <td><?= htmlspecialchars($p['METODO_PAGO']) ?></td>
                                 <td>
-                                    <a href="index.php?action=EliminarPedido&id=<?= $p['ID_PEDIDO'] ?>&from=VerPedidos" class="btn-icon delete" onclick="return confirm('¿Eliminar este Pedido?')"><i class="fas fa-trash"></i></a>
+                                    <a href="index.php?action=VerDetallePedido&id=<?= $p['ID_PEDIDO'] ?>" class="btn-icon view" title="Ver Detalles">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <?php if(!empty($p['RUTA'])&& file_exists($p['RUTA'])):?>
+                                        <a href="<?= htmlspecialchars($p['RUTA']) ?>" target="_blank" class="btn-icon pdf" title="Ver Factura">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </a>
+                                    <?php else:?>
+                                        <span title="Factura no disponible" class="btn-icon no-pdf">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </span>
+                                    <?php endif;?>
+                                    <?php if ($p['ESTADO'] == 'Pendiente'): ?>
+                                        <a href="index.php?action=SolicitarCancelacion&id=<?= $p['ID_PEDIDO'] ?>" 
+                                        class="btn-icon cancel" 
+                                        onclick="return confirm('¿Solicitar la cancelación de este pedido?')">
+                                            <i class="fas fa-times-circle"></i>
+                                        </a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

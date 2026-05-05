@@ -1,1 +1,0 @@
-console.log("Soy el primer Script");

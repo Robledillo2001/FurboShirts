@@ -351,7 +351,7 @@
             }
         }
 
-        public function obtenerDetallesPedido($id_pedido){
+        public function obtenerDetallesPedido($id_pedido){//Metodo para mostrar el detalle del pedido para insertarlo en LA FACTURA
             try{
                 //Consulta conjunta con el detalle
                 $sql="SELECT dp.*, p.NOMBRE as NOMBRE_PRODUCTO 
@@ -434,7 +434,9 @@
 
         public function mostrarPedidos($inicio,$cantidad,$id_user){//Metodo para mostrar todos los pedidos del usuario
             try{
-                $sql="SELECT * FROM pedidos p
+                $sql="SELECT p.*, f.RUTA 
+                    FROM pedidos p
+                    LEFT JOIN facturas f ON p.ID_PEDIDO = f.ID_PEDIDO
                     WHERE ID_USUARIO=:id_u
                     LIMIT :inicio, :cantidad";
                 $stmt=$this->db->prepare($sql);
@@ -460,6 +462,22 @@
                 return $res['total'];
             }catch(PDOException $e){
                 die("Error al Contar Pedidos".$e->getMessage());
+            }
+        }
+
+        public function solicitarCancelacion($id_pedido) {//Metodo para solicitar una cancelacion del pedido
+            try {
+                $this->db->beginTransaction();
+                $sql = "UPDATE pedidos SET ESTADO = 'Cancelación Solicitada' WHERE ID_PEDIDO = :id AND ESTADO = 'Pendiente'";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([':id' => $id_pedido]);
+                $this->db->commit();
+                return $stmt->rowCount() > 0;
+            } catch (PDOException $e) {
+                if($this->db->inTransaction()){
+                    $this->db->rollBack();
+                }
+                die("Error al solicitar cancelación: " . $e->getMessage());
             }
         }
 

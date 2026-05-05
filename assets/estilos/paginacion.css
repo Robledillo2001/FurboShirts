@@ -156,21 +156,32 @@
     border-radius: 50%;
 }
 
-.btn-icon.edit {
+
+.btn-icon.no-pdf {
+    color: var(--texto-suave);
+}
+
+.btn-icon.no-pdf:hover {
+    color: var(--texto-oscuro);
+    background-color: rgba(229, 62, 62, 0.1);
+    transform: scale(1.15);
+}
+
+.btn-icon.edit, .btn-icon.view {
     color: var(--verde-claro);
 }
 
-.btn-icon.edit:hover {
+.btn-icon.edit:hover, .btn-icon.view:hover {
     color: var(--verde-medio);
     background-color: rgba(80, 185, 94, 0.12);
     transform: scale(1.15);
 }
 
-.btn-icon.delete {
-    color: #e74c3c;
+.btn-icon.delete,.btn-icon.pdf, .btn-icon.cancel {
+    color: var(--rojo);
 }
 
-.btn-icon.delete:hover {
+.btn-icon.delete:hover,.btn-icon.pdf:hover, .btn-icon.cancel:hover {
     color: var(--rojo-hover);
     background-color: rgba(229, 62, 62, 0.1);
     transform: scale(1.15);

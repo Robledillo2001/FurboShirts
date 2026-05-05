@@ -1218,6 +1218,7 @@
                 $stmt = $this->db->prepare($sql);
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
                 $stmt->execute();
+                $this->db->commit();
                 return "Talla eliminada";
             } catch (PDOException $e) {
                 die("Error al eliminar talla: " . $e->getMessage());

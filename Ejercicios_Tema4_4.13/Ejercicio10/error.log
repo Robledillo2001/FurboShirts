@@ -1,3 +1,0 @@
-2024-12-09 23:07:46 - ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'CODIGO' in 'where clause'
-2024-12-09 23:11:29 - ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'CODIGO' in 'where clause'
-2024-12-09 23:13:13 - ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'CODIGO' in 'where clause'

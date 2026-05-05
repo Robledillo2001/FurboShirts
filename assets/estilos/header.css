@@ -291,3 +291,72 @@
     border-color: var(--verde-claro);
     transform: scale(1.05);
 }
+
+
+/* - Extensiones para el comportamiento responsive */
+
+/* Ocultar botón de menú en escritorio */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--verde-oscuro);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* Aparece en móviles */
+    }
+
+    .nav-menu {
+        display: none; /* Oculto por defecto */
+        flex-direction: column;
+        position: absolute;
+        top: 72px; /* Altura del header */
+        left: 0;
+        width: 100%;
+        background-color: var(--blanco);
+        padding: 10px 0;
+        box-shadow: var(--sombra-md);
+        border-bottom: 3px solid var(--verde-medio);
+        z-index: 999;
+        gap: 0;
+    }
+
+    /* Clase que activa el JS */
+    .nav-menu.active {
+        display: flex;
+        animation: dropdown-in 0.3s ease forwards;
+    }
+
+    .nav-a {
+        width: 100%;
+    }
+
+    .nav-a > a {
+        padding: 15px 5%;
+        border-radius: 0;
+        border-bottom: 1px solid var(--gris-claro);
+        width: 100%;
+    }
+
+    .header-actions {
+        gap: 8px; /* Reducimos espacio en móviles */
+    }
+
+    .search-bar {
+        display: flex;
+        padding: 4px 8px;
+    }
+
+    .search-bar input {
+        width: 100px; /* Reducimos el ancho del input en móviles */
+        font-size: 0.75rem;
+    }
+    
+    .header-actions {
+        gap: 5px; /* Pegamos más los elementos */
+    }
+}

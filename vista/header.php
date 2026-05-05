@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <script src="assets/js/header.js"></script>
     <?php
         $rol_actual = $_SESSION['ROL'] ?? 'visitante';
         $foto_perfil = $_SESSION['IMAGEN'] ?? 'assets/img/user.png';
@@ -38,7 +39,12 @@
             </a>
         </div>
 
-        <nav class="nav-menu">
+        <!-- BOTÓN HAMBURGUESA (Nuevo) -->
+        <button class="menu-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <nav class="nav-menu" id="nav-menu">
             <?php if($rol_actual === 'admin'): ?>
                 <div class="nav-a">
                     <a href="index.php?action=MenuAdmin">Gestionar Tienda</a>

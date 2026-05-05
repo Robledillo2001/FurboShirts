@@ -161,3 +161,9 @@ async function validarDireccion() {
     }
 }
 
+function mostrarCamposPago(tipo) {//Metodo para mostrar el codigo del metodo de pago
+    // Ocultar todos los detalles
+    document.querySelectorAll('.pago-detalle').forEach(el => el.style.display = 'none');
+    // Mostrar el seleccionado
+    document.getElementById('campos-' + tipo).style.display = 'block';
+}

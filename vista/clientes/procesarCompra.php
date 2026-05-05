@@ -59,22 +59,35 @@
                 <div class="checkout-section">
                     <h3><i class="fas fa-credit-card"></i> Método de Pago</h3>
                     <div class="metodos">
+                        <!-- Tarjeta de Crédito -->
                         <label class="metodo-option">
-                            <input type="radio" name="metodo_pago" value="Tarjeta" checked>
+                            <input type="radio" name="metodo_pago" value="Tarjeta" checked onclick="mostrarCamposPago('tarjeta')">
                             <span><i class="fas fa-credit-card"></i> Tarjeta de Crédito</span>
                         </label>
+                        <div id="campos-tarjeta" class="pago-detalle" style="margin-top: 10px; padding-left: 25px;">
+                            <input type="text" name="n_tarjeta" placeholder="0000 0000 0000 0000" maxlength="16" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                        </div>
+
+                        <!-- Transferencia -->
                         <label class="metodo-option">
-                            <input type="radio" name="metodo_pago" value="Transferencia">
+                            <input type="radio" name="metodo_pago" value="Transferencia" onclick="mostrarCamposPago('transferencia')">
                             <span><i class="fas fa-university"></i> Transferencia Bancaria</span>
                         </label>
+                        <div id="campos-transferencia" class="pago-detalle" style="display:none; margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 5px; font-size: 0.9rem;">
+                            <p style="margin-bottom: 10px;"><strong>Nuestra Cuenta:</strong> ES21 1234 5678 9012 3456 7890</p>
+                            <p style="font-size: 0.85rem; color: #555; margin-bottom: 10px;">Por favor, introduce el IBAN desde el que realizarás el pago para validar tu operación:</p>
+                            <input type="text" name="iban_cliente" placeholder="Tu IBAN (ES00...)" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                        </div>
+
+                        <!-- PayPal -->
                         <label class="metodo-option">
-                            <input type="radio" name="metodo_pago" value="PayPal">
+                            <input type="radio" name="metodo_pago" value="PayPal" onclick="mostrarCamposPago('paypal')">
                             <span><i class="fab fa-paypal"></i> PayPal</span>
                         </label>
-                        <label>
-                            <span>Codigo Metodo de Pago</span>
-                            <input type="text" name="codigo" id="codigo">
-                        </label>
+                        <div id="campos-paypal" class="pago-detalle" style="display:none; margin-top: 10px; padding-left: 25px;">
+                            <p style="font-size: 0.85rem; color: #555; margin-bottom: 10px;">Introduce el correo electrónico asociado a tu cuenta de PayPal:</p>
+                            <input type="email" name="email_paypal" placeholder="ejemplo@correo.com" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                        </div>
                     </div>
                 </div>
             </div>

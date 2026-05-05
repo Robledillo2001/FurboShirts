@@ -258,6 +258,19 @@
                 $direccion = trim($_POST['direccion'] ?? '');
                 $metodo_pago = $_POST['metodo_pago'] ?? 'Tarjeta';
 
+
+                $info_pago = $metodo_pago;
+                if($metodo_pago==='Tarjeta'){//Si se paga con tarjeta
+                    $n_tarjeta = $_POST['n_tarjeta'] ?? '';
+                    $info_pago.=" (Nº: " . substr($n_tarjeta, -4) . ")";//Guardamos solo los primeros 4 digitos de la tarjeta
+                }elseif($metodo_pago==='Transferencia'){//Si se paga con transferencia
+                    $iban = $_POST['iban_cliente'] ?? 'No indicado';
+                    $info_pago .= " (IBAN: $iban)";//Se guarda el numero de IBAN del banco
+                }elseif($metodo_pago==='PayPal'){//Si se paga con Paypal se guarda el correo añadido asociado a Paypal
+                    $email = $_POST['email_paypal'] ?? 'No indicado';
+                    $info_pago .= " (Email: $email)";
+                }
+
                 if (empty($direccion) || empty($_SESSION['carrito'])) {
                     header("Location: index.php?action=verCarrito");
                     exit();
@@ -266,13 +279,13 @@
                 foreach ($_SESSION['carrito'] as $i) {
                     $subtotal += $i['precio'] * ($i['cantidad'] ?? 1);
                 }
-                $envio = 4.50;
+                $envio = ($subtotal < 40) ? 4.50 : (($subtotal < 100) ? 3.00 : 1.20);
                 $total = $subtotal + $envio;
                 $fecha = date('Y-m-d H:i:s');
                 $estado = 'Pendiente';
                 $id_user = $_SESSION['id'];
 
-                $id_pedido=$modelo->registrarCompra($id_user, $fecha, $total, $estado, $direccion, $metodo_pago, $_SESSION['carrito']);
+                $id_pedido=$modelo->registrarCompra($id_user, $fecha, $total, $estado, $direccion, $info_pago, $_SESSION['carrito']);
 
                 if($id_pedido){//Si saca el id de pedido
                     $this->enviarCorreoPDF($id_pedido,$fecha,$total,$direccion);//Enviamos los datos del pedido para generar un correo y un PDF
@@ -286,7 +299,7 @@
             require_once "vista/clientes/procesarCompra.php";
         }
 
-        private function enviarCorreoPDF($id_pedido,$fecha,$total,$direccion,){//Funcion que enviará un correo y un PDF
+        private function enviarCorreoPDF($id_pedido,$fecha,$total,$direccion){//Funcion que enviará un correo y un PDF
             $modelo = new Cliente();
             $detalles = $modelo->obtenerDetallesPedido($id_pedido);
 
@@ -299,7 +312,7 @@
             }
 
             //TÍTULO DE FACTURA (Alineado a la derecha del logo)
-            $pdf->SetY(15);
+            $pdf->SetY(20);
             $pdf->SetFont('Arial', 'B', 20);
             $pdf->SetTextColor(26, 82, 36); // Verde oscuro
             $pdf->Cell(0, 10, utf8_decode("FACTURA OFICIAL"), 0, 1, 'R');
@@ -329,12 +342,14 @@
             $pdf->SetFont('Arial', 'B', 10);
 
             // Anchos ajustados para sumar 190mm (ancho total de página A4 menos márgenes)
-            $pdf->Cell(75, 8, 'Producto', 1, 0, 'C', true);
+            $pdf->Cell(70, 8, 'Producto', 1, 0, 'C', true);
             $pdf->Cell(20, 8, 'Talla', 1, 0, 'C', true);
-            $pdf->Cell(30, 8, 'Parche', 1, 0, 'C', true);
+            $pdf->Cell(20, 8, 'Parche', 1, 0, 'C', true);
+            $pdf->Cell(20, 8, 'Nombre', 1, 0, 'C', true);
+            $pdf->Cell(20, 8, 'Dorsal', 1, 0, 'C', true);
             $pdf->Cell(15, 8, 'Cant.', 1, 0, 'C', true);
-            $pdf->Cell(25, 8, 'Precio Un.', 1, 0, 'C', true);
-            $pdf->Cell(25, 8, 'Subtotal', 1, 1, 'C', true);
+            $pdf->Cell(20, 8, 'Precio Un.', 1, 0, 'C', true);
+            $pdf->Cell(20, 8, 'Subtotal', 1, 1, 'C', true);
 
             //CUERPO DE LA TABLA
             $pdf->SetTextColor(30, 35, 48);
@@ -347,12 +362,14 @@
                 // Color de fondo alterno para filas (opcional, muy profesional)
                 $pdf->SetFillColor(245, 245, 245); 
                 
-                $pdf->Cell(75, 7, utf8_decode($det['NOMBRE_PRODUCTO']), 1, 0, 'L', $fill);
+                $pdf->Cell(70, 7, utf8_decode($det['NOMBRE_PRODUCTO']), 1, 0, 'L', $fill);
                 $pdf->Cell(20, 7, $det['TALLA'], 1, 0, 'C', $fill);
-                $pdf->Cell(30, 7, utf8_decode($det['PARCHE']), 1, 0, 'C', $fill);
+                $pdf->Cell(20, 7, utf8_decode($det['PARCHE']), 1, 0, 'C', $fill);
+                $pdf->Cell(20, 7, utf8_decode($det['NOMBRE_PERSONALIZADO']), 1, 0, 'C', $fill);
+                $pdf->Cell(20, 7, utf8_decode($det['DORSAL']), 1, 0, 'C', $fill);
                 $pdf->Cell(15, 7, $det['CANTIDAD'], 1, 0, 'C', $fill);
-                $pdf->Cell(25, 7, number_format($det['PRECIO_UNITARIO'], 2) . " EUR", 1, 0, 'R', $fill);
-                $pdf->Cell(25, 7, number_format($subtotal, 2) . " EUR", 1, 1, 'R', $fill);
+                $pdf->Cell(20, 7, number_format($det['PRECIO_UNITARIO'], 2) . " EUR", 1, 0, 'R', $fill);
+                $pdf->Cell(20, 7, number_format($subtotal, 2) . " EUR", 1, 1, 'R', $fill);
                 
                 $fill = !$fill; 
             }
@@ -395,7 +412,7 @@
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
 
-                $mail->setFrom('lopezreinarobledilloruben@gmail.com', 'Tienda Deportiva');
+                $mail->setFrom('lopezreinarobledilloruben@gmail.com', 'FurboShirts Tienda Deportiva');
                 $mail->addAddress($_SESSION['correo']); 
 
                 // Adjuntar el archivo físico que guardamos en el paso 3
@@ -470,6 +487,36 @@
             $pedidosPag=$modelo->mostrarPedidos($inicio,$pedidos,$_SESSION['id']);
 
             require_once "vista/clientes/verPedidos.php";
+        }
+
+        public function SolicitarCancelacion(){
+            $this->comprobarCliente();
+            if (isset($_GET['id'])) {
+                $id_pedido = intval($_GET['id']);
+                $modelo = new Cliente(); //[cite: 2]
+                
+                // Llamamos al modelo para actualizar el estado (debe existir el método en el modelo)
+                $exito = $modelo->solicitarCancelacion($id_pedido); 
+                
+                if ($exito) {
+                    $_SESSION['mensaje_exito'] = "La solicitud de cancelación del pedido #$id_pedido se ha enviado.";
+                } else {
+                    $_SESSION['mensaje_error'] = "No se pudo cancelar el pedido. Es posible que ya esté en proceso.";
+                }
+            }
+            
+            header("Location: index.php?action=VerPedidos");
+            exit();
+        }
+
+        public function VerDetallePedido(){//Metodo para ver los detalles del pedido
+            $this->comprobarCliente();
+            $id_pedido=$_GET['id'];
+            $modelo=new Cliente();
+
+            $detalles=$modelo->obtenerDetallesPedido($id_pedido);
+
+            require_once "vista/clientes/detallePedido.php";
         }
 
         public function Vervaloraciones(){//Metodo para ver las valoraciones de los clientes

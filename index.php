@@ -1,17 +1,5 @@
 <?php
-<<<<<<< HEAD
-	if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
-		$uri = 'https://';
-	} else {
-		$uri = 'http://';
-	}
-	$uri .= $_SERVER['HTTP_HOST'];
-	header('Location: '.$uri.'/dashboard/');
-	exit;
-?>
-Something is wrong with the XAMPP installation :-(
-=======
-    error_reporting(E_ERROR | E_PARSE);
+    error_reporting(E_ERROR | E_PARSE |E_ALL);
     //Archivos con cada uno de los controladores
     require_once "controlador/usuarios_controlador.php";
     require_once "controlador/productos_controlador.php";
@@ -37,6 +25,8 @@ Something is wrong with the XAMPP installation :-(
     "pedidoConfirmado"=>$cliente,
     "actualizarCantidad"=>$cliente,
     "VerPedidos"=>$cliente,
+    "VerDetallePedido"=>$cliente,
+    "SolicitarCancelacion"=>$cliente,
     "Vervaloraciones"=>$cliente,
     "GestionProductos"=>$productos,
     "AnadirProducto"=>$productos,
@@ -94,4 +84,3 @@ Something is wrong with the XAMPP installation :-(
         echo "<h2>No se puede acceder a la Vista o no existe :(";
     }
 ?>
->>>>>>> 050d67d52606d9e037ee051937fb94eddb7ee2ac

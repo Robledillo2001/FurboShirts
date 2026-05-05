@@ -1,8 +1,0 @@
-Ruben:1234
-David:5678
-Jorge:abcd
-Alfonso:2345
-Rodolfo:1212
-Rodrigo:nose(literal)
-Romano:4545
-Quautemoc:igual que rodri

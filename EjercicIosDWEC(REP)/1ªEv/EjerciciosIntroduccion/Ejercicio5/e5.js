@@ -1,5 +1,0 @@
-alert('Hello world!')
-console.log('Logged message')
-console.info('Info message')
-console.error('Error message')
-console.warn('Warning message')
