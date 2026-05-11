@@ -2,7 +2,7 @@
    CARRITO WRAPPER
    ===================================================== */
 .carrito-wrapper {
-    max-width: 1100px;
+    width: 1100px;
     margin: 48px auto;
     padding: 0 32px 64px;
 }
@@ -713,16 +713,85 @@
 /* =====================================================
    RESPONSIVE
    ===================================================== */
+
+/*Tamaño para tablets y pantallas medianas*/
 @media (max-width: 860px) {
     .carrito-layout {
         grid-template-columns: 1fr;
     }
 
-    .carrito-resumen {
-        position: static;
+    .checkout-section, .carrito-resumen {
+        width: 70%; 
+        margin-bottom: 20px;
     }
 
     .carrito-wrapper {
-        padding: 0 16px 48px;
+        width: 100%;
+        padding: 0 0 48px;
+        box-sizing: border-box;
+    }
+
+    .checkout-layout{
+        grid-template-columns: 1fr;
+    }
+
+    #direccion-api, .metodo-option {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+/*Tamaño para telefonos medianos*/
+@media (max-width: 580px) {
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        padding-top: 40px; /* Espacio para el botón X */
+    }
+
+    .cart-item-img {
+        width: 100%;
+        height: 180px; /* Imagen más grande en móvil */
+    }
+
+    .cart-item-info h4 {
+        white-space: normal; /* Permitir que el título use dos líneas */
+    }
+
+    .cart-item-remove {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .cart-item-price {
+        text-align: left;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .resumen-envio .input-group { 
+        display: flex;
+        flex-direction: column; /* Uno arriba y otro abajo */
+        gap: 10px;
+    }
+
+    .btn-validar {
+        width: 100%; /* Botón a lo ancho total para que sea fácil de tocar */
+    }
+}
+/*Tamaño para telefonos pequeños*/
+@media (max-width: 480px) {
+    .modal-card {
+        padding: 32px 20px;
+        border-radius: 16px;
+    }
+
+    .modal-actions {
+        flex-direction: column; /* Botones uno encima de otro */
+    }
+
+    .modal-btn-confirm, .modal-btn-cancel {
+        width: 100%;
     }
 }

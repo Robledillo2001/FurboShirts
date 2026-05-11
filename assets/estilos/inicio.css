@@ -324,3 +324,118 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 28px rgba(0,0,0,0.25);
 }
+
+/* =====================================================
+   RESPONSIVE DESIGN (Media Queries)
+   ===================================================== */
+
+/* Tablets y pantallas medianas (Menos de 992px) */
+@media (max-width: 992px) {
+    .slide img {
+        height: 450px; /* Reducimos altura en tablets */
+    }
+
+    .slide-content h2 {
+        font-size: 2.5rem;
+    }
+
+    .servicio-card {
+        flex: 1 1 45%; /* Dos columnas en tablets */
+        border-right: none;
+        border-bottom: 1px solid var(--gris-borde);
+    }
+
+    .servicio-card:nth-child(2n) {
+        border-right: none;
+    }
+}
+
+/* Móviles grandes (Menos de 768px) */
+@media (max-width: 768px) {
+    /* Carousel */
+    .slide img {
+        height: 400px;
+    }
+
+    .slide::after {
+        background: linear-gradient(to top, 
+            rgba(0,0,0,0.8) 0%, 
+            rgba(0,0,0,0.2) 60%); /* Gradiente más oscuro para legibilidad */
+    }
+
+    .slide-content {
+        left: 5%;
+        right: 5%;
+        top: auto;
+        bottom: 60px;
+        transform: none;
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .slide-content h2 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .slide-content p {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        max-width: 100%;
+    }
+
+    .btn-shop {
+        padding: 12px 28px;
+        font-size: 0.85rem;
+    }
+
+    /* Ocultar flechas en móvil para ganar espacio o hacerlas más pequeñas */
+    .prev, .next {
+        width: 40px;
+        height: 40px;
+        background: rgba(0,0,0,0.3);
+    }
+    
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    /* Servicios */
+    .servicio-card {
+        flex: 1 1 100%; /* Una sola columna */
+        padding: 20px;
+    }
+
+    /* Promo Banner */
+    .promo-banner {
+        padding: 40px 20px;
+    }
+
+    .promo-banner h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Móviles pequeños (Menos de 480px) */
+@media (max-width: 480px) {
+    .slide img {
+        height: 350px;
+    }
+
+    .slide-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .dot.active {
+        width: 20px;
+    }
+
+    .servicio-card i {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+
+    .promo-banner h2 {
+        font-size: 1.5rem;
+    }
+}
