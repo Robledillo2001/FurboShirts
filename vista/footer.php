@@ -24,6 +24,9 @@
                             <?php else: ?>
                                 <li><a href="index.php?action=inicio">INICIO</a></li>
                                 <li><a href="index.php?action=mostrarCatalogo">PRODUCTOS</a></li>
+                                <li><a href="index.php?action=mostrarCatalogo&id_comp=5">MUNDIAL 2026</a></li>
+                                <li><a href="index.php?action=nosotros">NOSOTROS</a></li>
+                                <li><a href="index.php?action=contacto">CONTACTO</a></li>
                             <?php endif; ?>
                         </ul>
                     </div>

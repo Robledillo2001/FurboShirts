@@ -1,0 +1,275 @@
+/* SECCIÓN: NOSOTROS*/
+.nosotros-container {
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 0 5%;
+}
+
+.nosotros-hero {
+    text-align: center;
+    padding: 60px 5%;
+    /* Degradado oscuro sobre fondo para que el texto blanco resalte perfectamente */
+    background: linear-gradient(rgba(30, 35, 48, 0.85), rgba(30, 35, 48, 0.85)), 
+                url('../img/estadio-bg.jpg') no-repeat center center/cover;
+    color: var(--blanco);
+    border-radius: var(--radio-lg);
+    margin-bottom: 50px;
+    box-shadow: var(--sombra-md);
+}
+
+.nosotros-hero h1 {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    color: var(--blanco);
+}
+
+.nosotros-hero p {
+    font-size: 1.15rem;
+    max-width: 750px;
+    margin: 0 auto;
+    color: var(--gris-claro);
+    line-height: 1.7;
+}
+
+.nosotros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.nosotros-item {
+    background: var(--blanco);
+    padding: 40px 30px;
+    border-radius: var(--radio-md);
+    text-align: center;
+    box-shadow: var(--sombra-sm);
+    transition: transform var(--transicion), box-shadow var(--transicion);
+    border-bottom: 4px solid var(--gris-claro);
+}
+
+.nosotros-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-md);
+    border-bottom: 4px solid var(--verde-claro);
+}
+
+.nosotros-item i {
+    font-size: 2.5rem;
+    color: var(--verde-claro);
+    margin-bottom: 20px;
+}
+
+.nosotros-item h3 {
+    font-size: 1.3rem;
+    color: var(--texto-oscuro);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.nosotros-item p {
+    color: var(--texto-medio);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.nosotros-footer {
+    text-align: center;
+    padding: 50px 5%;
+    background-color: var(--blanco);
+    border-radius: var(--radio-lg);
+    box-shadow: var(--sombra-sm);
+}
+
+.nosotros-footer img {
+    max-width: 140px;
+    margin-bottom: 20px;
+}
+
+.nosotros-footer p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--texto-oscuro);
+    margin-bottom: 25px;
+}
+
+/* Botón adaptado al estilo "Personalizar" de tu web */
+.btn-verde {
+    display: inline-block;
+    background-color: var(--verde-claro);
+    color: var(--blanco);
+    padding: 12px 35px;
+    border-radius: var(--radio-pill); /* Usa tu cápsula perfecta */
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: background-color var(--transicion), transform var(--transicion);
+    box-shadow: var(--sombra-sm);
+}
+
+.btn-verde:hover {
+    background-color: var(--verde-hover);
+    transform: scale(1.03);
+}
+
+
+/* SECCIÓN: CONTACTO  */
+.contacto-container {
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 0 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.contacto-info {
+    padding-top: 20px;
+}
+
+.contacto-info h2 {
+    font-size: 2.2rem;
+    color: var(--texto-oscuro);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.contacto-info p {
+    color: var(--texto-medio);
+    font-size: 1.05rem;
+    margin-bottom: 35px;
+}
+
+.info-links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-links a, .info-links span {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.05rem;
+    color: var(--texto-oscuro);
+    padding: 18px;
+    background-color: var(--blanco);
+    border-radius: var(--radio-md);
+    box-shadow: var(--sombra-sm);
+    border: 1px solid var(--gris-claro);
+    transition: border-color var(--transicion), background-color var(--transicion);
+}
+
+.info-links a:hover {
+    border-color: var(--verde-claro);
+    background-color: var(--crema); /* Un toque estético con tu color crema */
+    color: var(--verde-oscuro);
+}
+
+.info-links i {
+    font-size: 1.3rem;
+    color: var(--verde-claro);
+    width: 30px;
+    text-align: center;
+}
+
+/* Contenedor del Formulario */
+.contacto-form {
+    background: var(--blanco);
+    padding: 40px;
+    border-radius: var(--radio-lg);
+    box-shadow: var(--sombra-md);
+    border-top: 6px solid var(--verde-claro);
+}
+
+.furboshirts-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.contacto-form .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contacto-form .input-group label {
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--texto-medio);
+}
+
+.contacto-form .input-group input,
+.contacto-form .input-group select,
+.contacto-form .input-group textarea {
+    padding: 12px 16px;
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio-sm);
+    font-size: 1rem;
+    font-family: 'Open Sans', sans-serif;
+    color: var(--texto-oscuro);
+    background-color: var(--blanco);
+    transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+
+/* Focus estilizado con tus verdes */
+.contacto-form .input-group input:focus,
+.contacto-form .input-group select:focus,
+.contacto-form .input-group textarea:focus {
+    outline: none;
+    border-color: var(--verde-claro);
+    box-shadow: 0 0 0 4px rgba(80, 185, 94, 0.15);
+}
+
+.contacto-form .btn-submit {
+    background-color: var(--verde-claro);
+    color: var(--blanco);
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: var(--radio-pill); /* Botón ovalado Pro */
+    cursor: pointer;
+    transition: background-color var(--transicion), transform var(--transicion);
+    margin-top: 10px;
+    box-shadow: var(--sombra-sm);
+}
+
+.contacto-form .btn-submit:hover {
+    background-color: var(--verde-hover);
+    transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   RESPONSIVE DESIGN
+   ===================================================== */
+@media (max-width: 992px) {
+    .contacto-container {
+        grid-template-columns: 1fr; /* Columna única en tablets y móviles */
+        gap: 40px;
+    }
+    
+    .contacto-info {
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .nosotros-hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .contacto-form {
+        padding: 25px 20px;
+    }
+}

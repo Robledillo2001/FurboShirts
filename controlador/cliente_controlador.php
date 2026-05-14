@@ -14,9 +14,89 @@
     require 'PHPMailer/PHPMailer/SMTP.php';
 
     class cliente_controlador{
-        public function inicio(){
+        public function inicio(){//Metodo con la vista de inicio
             $this->comprobarRol();//Metodo para comprobar si el rol del user es un cliente
             require_once "vista/inicio.php";
+        }
+
+        public function contacto(){//Metodo con la vista de contacto
+            $this->comprobarRol();//Metodo para comprobar si el rol del user es un cliente
+            require_once "vista/contacto.php";
+        }
+
+        public function nosotros(){//Metodo con la vista de nosotros
+            $this->comprobarRol();//Metodo para comprobar si el rol del user es un cliente
+            require_once "vista/nosotros.php";
+        }
+
+        public function enviarContacto(){
+            $this->comprobarRol();
+            if($_SERVER['REQUEST_METHOD'] == "POST"){
+                $nombre  = htmlspecialchars($_POST['nombre']);
+                $correo  = filter_var($_POST['correo'], FILTER_SANITIZE_EMAIL);
+                $asunto  = htmlspecialchars($_POST['asunto']);
+                $mensaje = htmlspecialchars($_POST['mensaje']);
+
+                // Validamos que el correo sea correcto antes de continuar
+                if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+                    die("Error: El formato del correo electrónico no es válido.");
+                }
+
+                // Asegúrate de instanciar correctamente la clase dependiendo de tus namespaces
+                // Si no usas namespaces en el controlador, basta con: $mail = new PHPMailer(true);
+                $mail = new PHPMailer(true);
+
+                try {
+                    // ACTIVAR SMTP (Crucial para que conecte con Gmail)
+                    $mail->isSMTP(); 
+                    
+                    // Configuración del servidor SMTP
+                    $mail->Host       = 'smtp.gmail.com'; 
+                    $mail->SMTPAuth   = true;
+                    $mail->Username   = 'lopezreinarobledilloruben@gmail.com'; 
+                    $mail->Password   = 'qqwp zfzv agys nqfa'; // Tu contraseña de aplicación segura
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port       = 587;
+                    $mail->CharSet    = 'UTF-8'; // Mantiene tildes y eñes correctamente
+
+                    // El emisor fijo debe ser la cuenta del administrador del SMTP
+                    $mail->setFrom('lopezreinarobledilloruben@gmail.com', 'FurboShirts Tienda Deportiva');
+                    
+                    // Destinatario: El correo del administrador
+                    $correoDestino = 'lopezreinarobledilloruben@gmail.com';
+                    $mail->addAddress($correoDestino); 
+
+                    // Dirección de respuesta: Permite responder directamente al email del cliente
+                    $mail->addReplyTo($correo, $nombre);
+
+                    // 3. CONTENIDO DEL MENSAJE
+                    $mail->isHTML(true);
+                    $mail->Subject = "Furboshirts Contacto: " . $asunto;
+                    $mail->Body    = "
+                        <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e3eb; border-top: 6px solid #21632a; padding: 20px; border-radius: 8px;'>
+                            <h2 style='color: #1e2330; border-bottom: 2px solid #eef0f5; padding-bottom: 10px; text-transform: uppercase;'>Nuevo Mensaje de Contacto</h2>
+                            <p style='font-size: 14px; color: #4a5568;'><strong>Nombre del cliente:</strong> {$nombre}</p>
+                            <p style='font-size: 14px; color: #4a5568;'><strong>Correo de contacto:</strong> <a href='mailto:{$correo}'>{$correo}</a></p>
+                            <p style='font-size: 14px; color: #4a5568;'><strong>Motivo / Asunto:</strong> {$asunto}</p>
+                            <div style='background-color: #f5f6fa; padding: 15px; border-left: 4px solid #50b95e; margin-top: 20px; border-radius: 4px;'>
+                                <p style='font-size: 15px; color: #1e2330; white-space: pre-wrap; margin: 0;'><strong>Mensaje:</strong><br><br>{$mensaje}</p>
+                            </div>
+                            <p style='font-size: 11px; color: #8a94a6; margin-top: 30px; text-align: center;'>Este correo fue generado automáticamente desde furboshirts.kesug.com</p>
+                        </div>";
+                        
+                    $mail->AltBody = "Nuevo mensaje de: {$nombre}\nCorreo: {$correo}\nAsunto: {$asunto}\nMensaje:\n{$mensaje}";
+                    
+                    // Enviar el correo
+                    $mail->send();
+                    
+                    // 4. REDIRECCIÓN CORREGIDA SINTÁCTICAMENTE
+                    header("Location: index.php?action=contacto&status=success");
+                    exit; // Siempre añade exit después de un header Location para detener el script
+
+                } catch (Exception $e) {
+                    die("Error al enviar el correo: " . $mail->ErrorInfo);
+                }
+            }
         }
 
         private function comprobarCliente(){//Metodo privado que comprueba si el usuario esta regisrado y es un cliente
@@ -411,9 +491,10 @@
                 $mail->Password   = 'qqwp zfzv agys nqfa'; 
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
+                $mail->CharSet    = 'UTF-8'; // Mantiene tildes y eñes correctamente
 
-                $mail->setFrom('lopezreinarobledilloruben@gmail.com', 'FurboShirts Tienda Deportiva');
-                $mail->addAddress($_SESSION['correo']); 
+                $mail->setFrom('lopezreinarobledilloruben@gmail.com', 'FurboShirts Tienda Deportiva');//Se envia el correo desde el de administrador
+                $mail->addAddress($_SESSION['correo']); //Hasta el correo del cliente
 
                 // Adjuntar el archivo físico que guardamos en el paso 3
                 $mail->addAttachment($rutaFisica);

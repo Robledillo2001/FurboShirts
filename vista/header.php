@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="assets/estilos/catalogo.css">
     <link rel="stylesheet" href="assets/estilos/producto.css">
     <link rel="stylesheet" href="assets/estilos/carrito.css">
+    <link rel="stylesheet" href="assets/estilos/nosotros.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -58,6 +59,15 @@
                 </div>
                 <div class="nav-a">
                     <a href="index.php?action=mostrarCatalogo">PRODUCTOS</a> 
+                </div>
+                <div class="nav-a">
+                    <a href="index.php?action=mostrarCatalogo&id_comp=5">MUNDIAL 2026</a> 
+                </div>
+                <div class="nav-a">
+                    <a href="index.php?action=nosotros">NOSOTROS</a> 
+                </div>
+                <div class="nav-a">
+                    <a href="index.php?action=contacto">CONTACTO</a> 
                 </div>
             <?php endif; ?>
         </nav>

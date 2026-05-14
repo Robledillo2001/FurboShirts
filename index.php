@@ -13,6 +13,9 @@
 
    $controladores=[//Array con los controladores de que realiza cada accion
     "inicio"=>$cliente,
+    "contacto"=>$cliente,
+    "nosotros"=>$cliente,
+    "enviarContacto"=>$cliente,
     "mostrarCatalogo"=>$cliente,
     "VerDetalle"=>$cliente,
     "guardarValoracion"=>$cliente,

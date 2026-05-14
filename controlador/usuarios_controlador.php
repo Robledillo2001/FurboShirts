@@ -249,9 +249,14 @@
             if($_SERVER['REQUEST_METHOD'] == 'POST'){//Recogida de datos del formulario
                 $nombre = $_POST['nombre'];
                 $apellidos = $_POST['apellidos'];
-                $correo = $_POST['correo'];
+                $correo = filter_var($_POST['correo'],FILTER_SANITIZE_EMAIL);
                 $passwd = password_hash($_POST['passwd'], PASSWORD_DEFAULT); 
                 $nombreUser = $_POST['nombreUser'];
+
+                // Validamos que el correo sea correcto antes de continuar
+                if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+                    die("Error: El formato del correo electrónico no es válido.");
+                }
 
                 //Llamada al metodo del modelo
                 $modelo = new Usuarios();
