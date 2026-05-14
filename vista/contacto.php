@@ -16,7 +16,9 @@
         
         <div class="info-links">
             <a href="https://wa.me/tu_numero" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp: +123 456 789</a>
-            <a href="mailto:lopezreinarobledilloruben@gmail.com"><i class="fas fa-envelope"></i> lopezreinarobledilloruben@gmail.com</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lopezreinarobledilloruben@gmail.com&su=Consulta+FurboShirts" target="_blank">
+                <i class="fas fa-envelope"></i> lopezreinarobledilloruben@gmail.com
+            </a>
             <span><i class="fas fa-clock"></i> Lunes a Viernes: 09:00 - 21:00 | Sabados: 9:00 - 13:00</span>
         </div>
     </div>
