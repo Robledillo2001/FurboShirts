@@ -88,6 +88,7 @@
                     
                     // Enviar el correo
                     $mail->send();
+                    $_SESSION['contacto']=true;
                     
                     // 4. REDIRECCIÓN CORREGIDA SINTÁCTICAMENTE
                     header("Location: index.php?action=contacto&status=success");

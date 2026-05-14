@@ -1,5 +1,14 @@
 <?php include __DIR__ . '/header.php'; ?>
 
+<?php if(isset($_SESSION['contacto'])): ?>
+    <script>
+        alert('¡Mensaje de contacto enviado con éxito! Le intentaremos avisar en breve.');
+    </script>
+<?php 
+    unset($_SESSION['contacto']); 
+    endif; 
+?>
+
 <section class="contacto-container">
     <div class="contacto-info">
         <h2>¿Necesitas ayuda, Capitán?</h2>
