@@ -10,10 +10,10 @@ include __DIR__ . '/../header.php';
             </div>
         <?php endif; ?>
         <h2><i class="fas fa-solid fa-futbol"></i>Añadir Deporte</h2>
-        <form action="index.php?action=AnadirDeporte" method="POST">
+        <form action="index.php?action=EditarDeporte&id=<?= $_GET['id'];?>" method="POST">
             <div class="input-group">
                 <label for="desc">Nombre del Deporte</label>
-                <input name="deporte" id="deporte" required>
+                <input name="deporte" id="deporte" value="<?= $nombreDeporte ?>" required>
             </div>
 
             <div class="acciones-form">

@@ -173,8 +173,8 @@
             $inicio=($paginaActual-1)*$categorias;
 
             //Obtener los datos del modelo
-            $totalProductos = $modelo->ContarCategorias();
-            $totalPaginas = ceil($totalProductos / $categorias);
+            $totalCat = $modelo->ContarCategorias();
+            $totalPaginas = ceil($totalCat / $categorias);
 
             //Obtenemos todos las Categorias de la pagina
             $categoriasPag=$modelo->ListarCategorias($inicio,$categorias);
@@ -252,7 +252,30 @@
             require_once "vista/productos/EditarCategorias.php";
         }
 
-        public function anadirDeporte(){//Metodo para añadir Deporte
+        public function MostrarDeportes(){//Metodo para mostrar deportes mediante paginacion
+            $this->checkAdmin();
+
+            $modelo=new Productos();
+
+            //Configuracion de la paginacion
+            $deportes = 5;
+            $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+            if($paginaActual < 1) $paginaActual = 1;
+
+            $inicio=($paginaActual-1)*$deportes;
+
+            //Obtener los datos del modelo
+            $totalDeportes = $modelo->contarDeportes();
+            $totalPaginas = ceil($totalDeportes / $deportes);
+
+            //Obtenemos todos las Categorias de la pagina
+            $depPag=$modelo->mostrarDeportes($inicio,$deportes);
+
+            //Cargar la vista con las Categorias
+            require_once "vista/productos/mostrarDeportes.php";
+        }
+
+        public function AnadirDeporte(){//Metodo para añadir Deporte
             $this->checkAdmin();
             $modelo=new Productos();
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -260,10 +283,54 @@
 
                 $modelo->añadirDeportes($deporte);
 
-                header("Location: index.php?action=GestionCategorias");
+                header("Location: index.php?action=MostrarDeportes");
                 exit();
             }
             require_once("vista/productos/AnadirDeportes.php");
+        }
+
+        public function EditarDeporte(){ // Metodo para editar deportes
+            $this->checkAdmin();
+            
+            if (!isset($_GET['id']) || empty($_GET['id'])) {
+                header("Location: index.php?action=MostrarDeportes");
+                exit();
+            }
+
+            $id_deporte = $_GET['id'];
+            $modelo = new Productos();
+
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                $deporte = $_POST['deporte'];
+                
+                // 🛠️ ¡AQUÍ ESTÁ EL CAMBIO! 
+                // Pasamos primero el ID y luego el nombre tal como lo pide tu modelo:
+                $modelo->editarDeporte($id_deporte, $deporte);
+
+                header("Location: index.php?action=MostrarDeportes");
+                exit();
+            }
+
+            $deporteBSD = $modelo->verDeporte($id_deporte);
+            
+            if (!$deporteBSD) {
+                header("Location: index.php?action=MostrarDeportes");
+                exit();
+            }
+
+            $nombreDeporte = $deporteBSD['DEPORTE'];
+            require_once("vista/productos/EditarDeporte.php");
+        }
+
+        public function EliminarDeporte(){//Metodo para eliminar deportes
+            $this->checkAdmin();
+            $modelo=new Productos();
+            if(isset($_GET['id'])){
+                $modelo->eliminarDeporte($_GET['id']);
+
+                header("Location: index.php?action=MostrarDeportes");
+                exit();
+            }
         }
 
         public function GestionEquipos(){//Metodo para Ver equipos

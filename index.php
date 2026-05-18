@@ -1,4 +1,6 @@
 <?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
     error_reporting(E_ERROR | E_PARSE |E_ALL);
     //Archivos con cada uno de los controladores
     require_once "controlador/usuarios_controlador.php";
@@ -40,6 +42,9 @@
     "EditarCategoria"=>$productos,
     "EliminarCategoria"=>$productos,
     "AnadirDeporte"=>$productos,
+    "EditarDeporte"=>$productos,
+    "EliminarDeporte"=>$productos,
+    "MostrarDeportes"=>$productos,
     "GestionTallas"=>$productos,
     "AnadirTallas"=>$productos,
     "EditarTallas"=>$productos,

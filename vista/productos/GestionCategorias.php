@@ -41,8 +41,8 @@
                     <a href="index.php?action=AnadirCategoria" class="btn-anadir">
                         <i class="fas fa-tags"></i> Nueva Categoria
                     </a>
-                    <a href="index.php?action=AnadirDeporte" class="btn-anadir">
-                        <i class="fa-sharp fa-solid fa-futbol"></i> Nuevo Deporte
+                    <a href="index.php?action=MostrarDeportes" class="btn-anadir">
+                        <i class="fa-sharp fa-solid fa-futbol"></i> Mostrar Deportes
                     </a>
                 </div>
             </div>

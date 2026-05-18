@@ -595,6 +595,86 @@
             }
         }
 
+        public function mostrarDeportes($inicio, $cantidad){//Metodo para mostrar todos los deportes que hay
+            try{
+                $sql="SELECT * FROM deportes
+                LIMIT :inicio, :cantidad";
+                $stmt=$this->db->prepare($sql);
+                $stmt->bindValue(':inicio', (int)$inicio, PDO::PARAM_INT);
+                $stmt->bindValue(':cantidad', (int)$cantidad, PDO::PARAM_INT);
+                $stmt->execute();
+
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                die("Error al mostrar deportes: ".$e->getMessage());
+            }
+        }
+
+        public function contarDeportes(){//Metodo para contar los deportes
+            try{
+                $sql="SELECT COUNT(*) as total FROM deportes";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute();
+
+                $res=$stmt->fetch(PDO::FETCH_ASSOC);
+                return $res['total'];
+            }catch(PDOException $e){
+                die("Error al mostrar deportes: ".$e->getMessage());
+            }
+        }
+
+        public function editarDeporte($id,$deporte){//Metodo para editar un deporte
+            try{
+                $this->db->beginTransaction();
+
+                $sql="UPDATE deportes SET DEPORTE=:deporte WHERE ID_DEPORTE=:id_deporte";
+                $stmt=$this->db->prepare($sql);
+                
+                $stmt->bindValue(":deporte", $deporte, PDO::PARAM_STR);
+                $stmt->bindValue(':id_deporte', (int)$id, PDO::PARAM_INT);
+
+                $stmt->execute();
+
+                $this->db->commit();
+            }catch(PDOException $e){
+                if($this->db->inTransaction()){
+                    $this->db->rollBack();
+                }
+                die("Error al editar deportes: ".$e->getMessage());
+            }
+        }
+
+        public function verDeporte($id){//Metodo para ver los datos de un deporte al editarlo
+            try{
+                $sql="SELECT * FROM deportes
+                WHERE ID_DEPORTE=:id_deporte";
+                $stmt=$this->db->prepare($sql);
+                $stmt->bindValue(':id_deporte', (int)$id, PDO::PARAM_INT);
+                $stmt->execute();
+
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                die("Error al mostrar deportes: ".$e->getMessage());
+            }
+        }
+
+        public function eliminarDeporte($id){//Metodo para eliminar un deporte
+            try{
+                $this->db->beginTransaction();
+                $sql="DELETE FROM deportes WHERE ID_DEPORTE=:id_deporte";
+                $stmt=$this->db->prepare($sql);
+                $stmt->bindValue(':id_deporte', (int)$id, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $this->db->commit();
+            }catch(PDOException $e){
+                if($this->db->inTransaction()){
+                    $this->db->rollBack();
+                }
+                die("Error al eliminar deportes: ".$e->getMessage());
+            }
+        }
+
         public function ListarDeportes(){//Meetodo para Listar deportes
             try{
                 $sql="SELECT * FROM deportes";
