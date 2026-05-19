@@ -9,7 +9,7 @@ include __DIR__ . '/../header.php';
                 <?php echo $error; ?>
             </div>
         <?php endif; ?>
-        <h2><i class="fas fa-solid fa-futbol"></i>Añadir Deporte</h2>
+        <h2><i class="fas fa-solid fa-futbol"></i>Editar Deporte</h2>
         <form action="index.php?action=EditarDeporte&id=<?= $_GET['id'];?>" method="POST">
             <div class="input-group">
                 <label for="desc">Nombre del Deporte</label>

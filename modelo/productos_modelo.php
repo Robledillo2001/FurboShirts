@@ -7,7 +7,7 @@
             $this->db=Conexion::conexion();   
         }
         //Administracion de los Productos
-        public function ListarProductos($inicio, $cantidad){
+        public function ListarProductos($inicio, $cantidad){//Metodo para listar los productos disponibles
             try{ 
                 //Se usa una consulta conjunta de 5 Tablas ya que los productos contienen en su tabla las claves foraneas del ID_EQUIPO Y CATEGORIA Y EL ID DE PRODCUTO ESTA EN OTRA TABLA JUNTO CON EL ID DE TALLAS
                 $sql="SELECT p.ID_PRODUCTO,pt.ID_TALLA,p.NOMBRE, pt.STOCK_ESPECIFICO AS STOCK, t.TALLA,
@@ -171,7 +171,7 @@
         }
 
 
-        public function obtenerCategorias() {//Obtener todas las categorías de prendas
+        public function obtenerCategorias() {//Obtener todas las categorías de prendas para añadir un producto
             try {
                 $sql = "SELECT ID_CAT, PRENDA FROM categorias"; //
                 $stmt = $this->db->prepare($sql);
@@ -182,7 +182,7 @@
             }
         }
 
-         public function obtenerDeportes() {//Obtener todos los deportes
+         public function obtenerDeportes() {//Obtener todos los deportes para añadir a una categoria y a un producto
             try {
                 $sql = "SELECT ID_DEPORTE, DEPORTE FROM deportes"; //
                 $stmt = $this->db->prepare($sql);
@@ -193,7 +193,7 @@
             }
         }
 
-        public function obtenerDeportesPorCategoria($id_cat) {//Obtener todos los deportes asociados a una categoria
+        public function obtenerDeportesPorCategoria($id_cat) {//Obtener todos los deportes asociados a una categoria al añadir un producto
             try {
                 $sql = "SELECT 
                         d.ID_DEPORTE, d.DEPORTE 
@@ -211,7 +211,7 @@
             }
         }
 
-        public function obtenerEquipos() {//Obtener todos los equipos y selecciones
+        public function obtenerEquipos() {//Obtener todos los equipos y selecciones al añadir un producto
             try {
                 // La tabla se llama entidad_deportiva según tu SQL
                 $sql = "SELECT ID_EQUIPO, NOMBRE_EQUIPO FROM entidad_deportiva ORDER BY NOMBRE_EQUIPO ASC"; 
@@ -223,7 +223,7 @@
             }
         }
 
-        public function obtenerTallas() {//Obtener todas las tallas disponibles para la cuadrícula
+        public function obtenerTallas() {//Obtener todas las tallas disponibles para añadirlas a un producto
             try {
                 $sql = "SELECT ID_TALLA, TALLA FROM tallas"; //
                 $stmt = $this->db->prepare($sql);
@@ -378,40 +378,6 @@
             $stmt = $this->db->prepare($sql);
             $stmt->execute([':id_producto' => $id_producto]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        public function obtenerProductoPorId($id_producto) {//Metodo para que seleccione los deportes asociados a una categoria al Añadir/Editar un Producto
-            try {
-                // Seleccionamos los datos del producto
-                // Incluimos ID_DEPORTE para que el select de la vista sepa qué opción marcar
-                $sql = "SELECT * FROM productos WHERE ID_PRODUCTO = :id";
-                
-                $stmt = $this->db->prepare($sql);
-                $stmt->bindValue(':id', $id_producto, PDO::PARAM_INT);
-                $stmt->execute();
-                
-                $producto = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if ($producto) {
-                    // También recuperamos las imágenes asociadas a este producto
-                    // para poder mostrarlas en la vista de edición
-                    $sqlImg = "SELECT RUTA FROM imagenes WHERE ID_PRODUCTO = :id ORDER BY ID_IMAGEN ASC";
-                    $stmtImg = $this->db->prepare($sqlImg);
-                    $stmtImg->bindValue(':id', $id_producto, PDO::PARAM_INT);
-                    $stmtImg->execute();
-                    
-                    $imagenes = $stmtImg->fetchAll(PDO::FETCH_ASSOC);
-                    
-                    // Añadimos las rutas de las imágenes al array del producto
-                    // Usamos índices 0 y 1 para que coincidan con imagen1 e imagen2 del controlador
-                    $producto['imagen1'] = isset($imagenes[0]) ? $imagenes[0]['RUTA'] : "";
-                    $producto['imagen2'] = isset($imagenes[1]) ? $imagenes[1]['RUTA'] : "";
-                }
-
-                return $producto;
-            } catch (PDOException $e) {
-                die("Error al obtener el producto: " . $e->getMessage());
-            }
         }
 
         //Administracion de las Categorias
@@ -675,7 +641,7 @@
             }
         }
 
-        public function ListarDeportes(){//Meetodo para Listar deportes
+        public function ListarDeportes(){//Metodo para Listar deportes al añadir una categoria
             try{
                 $sql="SELECT * FROM deportes";
 
@@ -689,7 +655,7 @@
         }
 
         //Administracion de los Equipos
-        public function ListarEquipos($inicio, $cantidad){
+        public function ListarEquipos($inicio, $cantidad){//Metodo para ver entidades deportivas que sean equipos 
             try{
                 $tipo='Equipo';
                 $sql = "SELECT * FROM entidad_deportiva WHERE TIPO = :tipo LIMIT :inicio, :cantidad";
@@ -704,7 +670,7 @@
             }
         }
         
-        public function ContarEquipos(){
+        public function ContarEquipos(){//Metodo para contar entidades deportivas que sean equipos 
             try{
                 $tipo='Equipo';
                 $sql = "SELECT COUNT(*) as total FROM entidad_deportiva WHERE TIPO = :tipo";
@@ -738,7 +704,7 @@
             }
         }
         //Administracion de las Selecciones
-        public function ListarSelecciones($inicio, $cantidad){
+        public function ListarSelecciones($inicio, $cantidad){//Metodo para ver entidades deportivas que sean selecciones 
             try{
                 $tipo='Seleccion';
                 $sql = "SELECT * FROM entidad_deportiva WHERE TIPO = :tipo LIMIT :inicio, :cantidad";
@@ -753,7 +719,7 @@
             }
         }
 
-        public function ContarSelecciones(){
+        public function ContarSelecciones(){//Metodo para contar entidades deportivas que sean selecciones 
             try{
                 $tipo='Seleccion';
                 $sql = "SELECT COUNT(*) as total FROM entidad_deportiva WHERE TIPO = :tipo";
@@ -805,7 +771,7 @@
             }
         }
 
-        public function editarED($id_equipo,$nombre_equipo,$escudo,$tipo){//Metodo para editar la entidad del equipo
+        public function editarED($id_equipo,$nombre_equipo,$escudo,$tipo){//Metodo para editar una entidad deportiva
             try{
                 $this->db->beginTransaction();
                 if(!empty($nombre_equipo)){
@@ -878,7 +844,7 @@
                 die("Error al Contar Temporadas".$e->getMessage());
             }
         }
-        public function ListarCompeticiones() {//Listar Competiciones
+        public function ListarCompeticiones() {//Listar Competiciones para añadir una temporada
             try {
                 $sql = "SELECT * FROM competiciones ORDER BY NOMBRE_COMP ASC";
                 $stmt = $this->db->prepare($sql);

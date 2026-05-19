@@ -149,7 +149,6 @@
             $producto=$modelo->MostrarProducto($id_editar);//Metodo para mostrar datos del producto mediante ID
             $stocksActuales = $modelo->ObtenerStockTallas($id_editar);//Obtener el stock de las tallas
             $imagenes = $modelo->ObtenerImagenesProducto($id_editar);//Metodo para obtener las imagenes de cada Producto
-            $producto = $modelo->obtenerProductoPorId($id_editar);
             $categorias = $modelo->obtenerCategorias();
             $equipos = $modelo->obtenerEquipos();
             $tallas = $modelo->obtenerTallas();

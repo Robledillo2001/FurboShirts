@@ -78,7 +78,7 @@
             }
         }
 
-        public function login($input, $contraseña) {
+        public function login($input, $contraseña) {//Metodo para identificar si el usuario existe para iniciar sesion
             try {
                 $sql = "SELECT * FROM usuarios WHERE NOMBRE_USUARIO = :usuario OR CORREO = :usuario";
                 $stmt = $this->db->prepare($sql);
@@ -98,7 +98,7 @@
             }
         }
 
-        public function registrar($nombre, $apellidos, $correo, $passwd, $nombreUser) {
+        public function registrar($nombre, $apellidos, $correo, $passwd, $nombreUser) {//Metodo para registrar un usuario tipo cliente en la BSD
             try {
                 // Comprobamos si ya existe
                 $sql = "SELECT ID_USUARIO FROM usuarios WHERE NOMBRE_USUARIO = :nombreUser OR CORREO = :correo";
@@ -139,7 +139,7 @@
             }
         }
 
-        public function mostrarAdministradores($inicio, $cantidad) {
+        public function mostrarAdministradores($inicio, $cantidad) {//Metodo para mostrar administradores
             try {
                 $rol = 'admin';
                 $sql = "SELECT * FROM usuarios WHERE ROL=:rol LIMIT :inicio, :cantidad";
@@ -156,7 +156,7 @@
             }
         }
 
-        public function contarAdmins() {
+        public function contarAdmins() {//Metodo para contar los administradores
             try {
                 $rol = 'admin';
                 $sql = "SELECT COUNT(*) as total FROM usuarios WHERE ROL=:rol";
@@ -210,7 +210,7 @@
             }
         } 
 
-        public function mostrarClientes($inicio, $cantidad) {
+        public function mostrarClientes($inicio, $cantidad) {//Metodo para mostrar los clientes de la Base de Datos
             try {
                 $rol = 'cliente';
                 $sql = "SELECT * FROM usuarios WHERE ROL=:rol LIMIT :inicio, :cantidad";
@@ -227,7 +227,7 @@
             }
         }
 
-        public function contarClientes() {
+        public function contarClientes() {//Metodo para contar los clientes
             try {
                 $rol = 'cliente';
                 $sql = "SELECT COUNT(*) as total FROM usuarios WHERE ROL=:rol";
@@ -241,7 +241,7 @@
             }
         }
 
-        public function eliminarUsuarios($id){
+        public function eliminarUsuarios($id){//Metodo para eliminar usuarios de la base de datos
             try {
                 $this->db->beginTransaction();
                 $sql = "DELETE FROM usuarios WHERE ID_USUARIO=:id_usuario";
@@ -258,7 +258,7 @@
             }
         }
 
-        public function editarUsuarios($id_usuario,$rol){//Metodo para editar usuarios
+        public function editarUsuarios($id_usuario,$rol){//Metodo para editar el rol de los usuarios
             try{
                 $this->db->beginTransaction();
 

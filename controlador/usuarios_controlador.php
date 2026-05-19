@@ -85,7 +85,7 @@
             require_once "vista/MenuAdmin.php";
         }
 
-        public function EliminarUsuario(){
+        public function EliminarUsuario(){//Metodo para eliminar un usuario
             $this->checkAdmin();
             if(isset($_GET['id'])){
                 $id=(int)$_GET['id'];
@@ -104,7 +104,7 @@
             }
         }
 
-        public function EditarPerfil(){
+        public function EditarPerfil(){//Metodo para editar el perfil de un usuario logueado
             if($_SERVER['REQUEST_METHOD']=='POST'){
                 $id=$_SESSION['id'];
                 $nombre=$_POST['nombre']??"";
@@ -139,7 +139,7 @@
             require_once "vista/usuarios/EditarPerfil.php";
         }
 
-        public function EditarUsuario(){//Metodo para editar Usuarios
+        public function EditarUsuario(){//Metodo para editar el rol de los Usuarios
             $this->checkAdmin();
             if($_SERVER['REQUEST_METHOD']=='POST' && isset($_GET['id'])){
                 $id=$_GET['id'];
@@ -161,7 +161,7 @@
             require_once "vista/usuarios/EditarUsuarios.php";
         }
 
-        public function CambiarIMgPerfil(){
+        public function CambiarIMgPerfil(){//Metodo para cambiar la imagen de usuario
             if($_SERVER['REQUEST_METHOD']=='POST'){
                  if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK){
                     $id=$_SESSION['id'];

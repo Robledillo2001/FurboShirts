@@ -210,7 +210,7 @@
             }
         }
 
-        public function listarAnios(){
+        public function listarAnios(){//Metodo para listar los años de edicion de los productos
             try {
                 $sql = "SELECT DISTINCT ANO_EDICION FROM productos ORDER BY ANO_EDICION DESC";
                 $stmt = $this->db->query($sql);
@@ -259,7 +259,7 @@
             }
         }
 
-        public function comprobarCaTegoria($id){//Metodo para comprobar la categoria
+        public function comprobarCaTegoria($id){//Metodo para comprobar la categoria de un producto para identificar el tipo de prenda en la ficha tecnica
             try{
                 $sql="SELECT PRENDA FROM categorias WHERE ID_CAT =:id";
                 $stmt=$this->db->prepare($sql);
@@ -271,7 +271,7 @@
             }
         }
 
-        public function registrarCompra($id_user,$fecha,$total,$estado,$direccion,$pago,$carrito){
+        public function registrarCompra($id_user,$fecha,$total,$estado,$direccion,$pago,$carrito){//Metodo para insertar el pedido de una compra y su detalle
             try{
                 $this->db->beginTransaction();
                 //Insertamos los pedidos
