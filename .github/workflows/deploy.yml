@@ -10,7 +10,6 @@ jobs:
     name: Subir archivos por FTP
     runs-on: ubuntu-latest
 
-    # GitHub buscará el entorno llamado exactamente "InfinityFree"
     environment: InfinityFree
 
     steps:
