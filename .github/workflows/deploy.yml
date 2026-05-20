@@ -22,5 +22,5 @@ jobs:
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWD }}
+          password: ${{ secrets.FTP_PASWD }}
           server-dir: /htdocs/
