@@ -10,7 +10,7 @@
 
     // Incluir las clases de PHPMailer
 
-    require_once "config.php";
+    require_once "./config.php";
     
     rutasMail();
 

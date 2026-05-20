@@ -20,9 +20,9 @@
     function rutasMail(){
         // Corregido: Añadido el operador "" que faltaba en medio
         if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
-            require 'PHPMailer/PHPMailer/Exception.php';
-            require 'PHPMailer/PHPMailer/PHPMailer.php';
-            require 'PHPMailer/PHPMailer/SMTP.php';
+            require_once 'PHPMailer/PHPMailer/Exception.php';
+            require_once 'PHPMailer/PHPMailer/PHPMailer.php';
+            require_once 'PHPMailer/PHPMailer/SMTP.php';
         } else {
             // Corregido: Corregida la "m" mayúscula de PHPMailer para el servidor Linux
             require_once $_SERVER['DOCUMENT_ROOT'] . '/PHPMailer/PHPMailer/Exception.php';
