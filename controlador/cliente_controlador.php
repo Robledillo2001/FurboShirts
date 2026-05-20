@@ -10,14 +10,9 @@
 
     // Incluir las clases de PHPMailer
 
-    require 'PHPMailer/PHPMailer/Exception.php';
-    require 'PHPMailer/PHPMailer/PHPMailer.php';
-    require 'PHPMailer/PHPMailer/SMTP.php';
-
-    //Los require de las clases PHPMailer que se usan en el archivo del controlador de InfinityFree
-    /*require_once $_SERVER['DOCUMENT_ROOT'] . '/PHPMailer/PhpMailer/Exception.php';
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/PHPMailer/PhpMailer/PHPMailer.php';
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/PHPMailer/PhpMailer/SMTP.php';*/
+    require_once "config.php";
+    
+    rutasMail();
 
     class cliente_controlador{
         public function inicio(){//Metodo con la vista de inicio
