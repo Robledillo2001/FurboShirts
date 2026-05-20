@@ -1,9 +1,8 @@
-name:  Desplegar TFG en InfinityFree
+name: Desplegar TFG en InfinityFree
 
 on:
   push:
     branches:
-      
       - main
 
 jobs:
@@ -11,18 +10,17 @@ jobs:
     name: Subir archivos por FTP
     runs-on: ubuntu-latest
 
+    # GitHub buscará el entorno llamado exactamente "InfinityFree"
     environment: InfinityFree
 
     steps:
-    
-    - name: Descargar código del repo 
-      uses: actions/checkout@v4
+      - name: Descargar código del repo 
+        uses: actions/checkout@v4
 
-    
-    - name: Sincronizar con InfinityFree
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ secrets.FTP_HOST }}
-        username: ${{ secrets.FTP_USER }}
-        password: ${{ secrets.FTP_PASSWD }}
-        server-dir: /htdocs/
+      - name: Sincronizar con InfinityFree
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWD }}
+          server-dir: /htdocs/
