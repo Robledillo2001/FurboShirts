@@ -25,9 +25,9 @@
             require_once 'PHPMailer/PHPMailer/SMTP.php';
         } else {
             // Corregido: Corregida la "m" mayúscula de PHPMailer para el servidor Linux
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/PHPMailer/PHPMailer/Exception.php';
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/PHPMailer/PHPMailer/PHPMailer.php';
-            require_once $_SERVER['DOCUMENT_ROOT'] . '/PHPMailer/PHPMailer/SMTP.php';
+            require_once __DIR__ . '/PHPMailer/PHPMailer/Exception.php';
+            require_once __DIR__ . '/PHPMailer/PHPMailer/PHPMailer.php';
+            require_once __DIR__ . '/PHPMailer/PHPMailer/SMTP.php';
         }
     }
 ?>
