@@ -17,18 +17,34 @@
     <?php
         $subtotal = 0;
         foreach ($_SESSION['carrito'] as $item) {
-            $subtotal += $item['precio'] * ($item['cantidad'] ?? 1);
-        }
-        $envio = 0.00;
+            $personalizacion=0;
+            if($item['parche']!=0){
+                $personalizacion+=2;
+            }
 
-        if($subtotal<40){
+            if($item['nombre_personalizado']!=="Sin nombre"&&$item['numero']!=="S/N"){
+                $personalizacion+=3;
+            }
+
+
+            $precio_final_unidad=$item['precio']+$personalizacion;
+
+            $subtotal += $precio_final_unidad * $item['cantidad'];
+        }
+        //Calculo total con el IVA
+        $envio = 0.00;
+        $porcentaje_iva = 0.21; // 21% de IVA
+        $total_iva = $subtotal * $porcentaje_iva;
+        $subtotal_con_iva = $subtotal + $total_iva;
+
+        if($subtotal_con_iva<40){
             $envio = 4.50;
-        }elseif($subtotal<100){
+        }elseif($subtotal_con_iva<100){
             $envio = 3.00;
-        }elseif($subtotal>=100){
+        }elseif($subtotal_con_iva>=100){
             $envio = 1.20;
         }
-        $total = $subtotal + $envio;
+        $total = $subtotal_con_iva + $envio;
     ?>
 
     <form action="index.php?action=procesarCompra" method="POST" id="form-checkout">
@@ -125,6 +141,18 @@
                 <div class="resumen-row">
                     <span>Subtotal</span>
                     <span><?= number_format($subtotal, 2) ?>€</span>
+                </div>
+                <div class="resumen-row">
+                    <span>Porcentaje IVA</span>
+                    <span>21 %</span>
+                </div>
+                <div class="resumen-row">
+                    <span>Precio Parche por Producto</span>
+                    <span><?= number_format(2, 2) ?> €</span>
+                </div>
+                <div class="resumen-row">
+                    <span>Precio Dorsal y Numero por Producto</span>
+                    <span><?= number_format(3, 2) ?> €</span>
                 </div>
                 <div class="resumen-row">
                     <span>Envío</span>

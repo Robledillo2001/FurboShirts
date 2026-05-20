@@ -364,10 +364,26 @@
                 }
 
                 foreach ($_SESSION['carrito'] as $i) {
-                    $subtotal += $i['precio'] * ($i['cantidad'] ?? 1);
+                    $personalizacion=0;
+                    if($i['parche']!=0){
+                        $personalizacion+=2;
+                    }
+
+                    if($i['nombre_personalizado']!=="Sin nombre"&&$i['numero']!=="S/N"){
+                        $personalizacion+=3;
+                    }
+
+
+                    $precio_final_unidad=$i['precio']+$personalizacion;
+
+                    $subtotal += $precio_final_unidad * $i['cantidad'];
                 }
-                $envio = ($subtotal < 40) ? 4.50 : (($subtotal < 100) ? 3.00 : 1.20);
-                $total = $subtotal + $envio;
+                //Calculo con IVA
+                $porcentaje_iva = 0.21; // 21% de IVA
+                $total_iva = $subtotal * $porcentaje_iva;
+                $subtotal_con_iva = $subtotal + $total_iva;
+                $envio = ($subtotal_con_iva < 40) ? 4.50 : (($subtotal_con_iva < 100) ? 3.00 : 1.20);
+                $total = $subtotal_con_iva + $envio;
                 $fecha = date('Y-m-d H:i:s');
                 $estado = 'Pendiente';
                 $id_user = $_SESSION['id'];
