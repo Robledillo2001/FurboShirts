@@ -1,5 +1,4 @@
 <?php
- echo $_SERVER['SERVER_NAME'];
     function conexion(){
         // Declaramos las variables como globales para que salgan de la función
         global $dbhost, $dbname, $dbuser, $dbpasswd;
