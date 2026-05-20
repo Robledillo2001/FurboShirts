@@ -25,9 +25,9 @@
             require_once 'PHPMailer/PHPMailer/SMTP.php';
         } else {
             // Corregido: Corregida la "m" mayúscula de PHPMailer para el servidor Linux
-            require_once __DIR__ . '/PHPMailer/PHPMailer/Exception.php';
-            require_once __DIR__ . '/PHPMailer/PHPMailer/PHPMailer.php';
-            require_once __DIR__ . '/PHPMailer/PHPMailer/SMTP.php';
+            require_once __DIR__ . '/PHPMailer/PhpMailer/Exception.php';
+            require_once __DIR__ . '/PHPMailer/PhpMailer/PHPMailer.php';
+            require_once __DIR__ . '/PHPMailer/PhpMailer/SMTP.php';
         }
     }
 ?>
