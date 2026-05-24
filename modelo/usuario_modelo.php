@@ -280,5 +280,64 @@
                 die("Error al editar Perfil: ".$e->getMessage());
             }
         }
+
+        public function registrarTokenRecuperacion($correo,$token,$expiracion){//Metodo para registrar un token de recuperacion de contraseña
+            try{
+                $this->db->beginTransaction();
+                //Almacenamos el token y cuando caduca en los campos del usuario
+                $sql="UPDATE usuarios 
+                    SET TOKEN_RECUPERACION = :token, 
+                    EXPIRACION_TOKEN = :expiracion 
+                    WHERE CORREO = :correo";
+                $stmt=$this->db->prepare($sql);
+                $stmt->bindParam(":token",$token,PDO::PARAM_STR);
+                $stmt->bindParam(":expiracion",$expiracion,PDO::PARAM_STR);
+                $stmt->bindParam(":correo",$correo,PDO::PARAM_STR);
+                $stmt->execute();
+                $this->db->commit();
+                return true;
+            }catch(PDOException $e){
+                if($this->db->inTransaction()){
+                    $this->db->rollBack();
+                }
+                die("Error al añadir el Token: ".$e->getMessage());
+            }
+        }
+
+        public function verificarTokenUsuario($correo){//Metodo para obtener el token de la BD usando el correo de la URL
+            try{
+                $sql="SELECT TOKEN_RECUPERACION, EXPIRACION_TOKEN FROM usuarios
+                    WHERE CORREO=:correo";
+                $stmt=$this->db->prepare($sql);
+                $stmt->bindParam(":correo",$correo,PDO::PARAM_STR);
+                $stmt->execute();
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                die("Error al obtener el Token: ".$e->getMessage());
+            }
+        }
+
+        public function actualizarContraseña($correo,$nuevoPasswordHash){//Metodo para modificar la contraseña y limpiar los campos del token
+            try{
+                $this->db->beginTransaction();
+                //Almacenamos el token y cuando caduca en los campos del usuario
+                $sql="UPDATE usuarios 
+                    SET PASSWD = :passwd, 
+                    TOKEN_RECUPERACION = NULL, 
+                    EXPIRACION_TOKEN = NULL 
+                    WHERE CORREO = :correo";
+                $stmt=$this->db->prepare($sql);
+                $stmt->bindParam(":passwd",$nuevoPasswordHash,PDO::PARAM_STR);
+                $stmt->bindParam(":correo",$correo,PDO::PARAM_STR);
+                $stmt->execute();
+                $this->db->commit();
+                return true;
+            }catch(PDOException $e){
+                if($this->db->inTransaction()){
+                    $this->db->rollBack();
+                }
+                die("Error al Actualizar la contraseña: ".$e->getMessage());
+            }
+        }
     }
 ?>

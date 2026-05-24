@@ -36,6 +36,7 @@ include __DIR__ . '/../header.php';
             <button type="submit" class="btn-login">INICIAR SESION</button>
         </form>
         <b>¿No tienes cuenta? <a href="index.php?action=registrar">Registrate</a></b>
+        <b>¿Has olvidado tu contraseña?<a href="index.php?action=solicitarRecuperacion">Restablecer Constraseña</a></b>
     </div>
 </div>
 

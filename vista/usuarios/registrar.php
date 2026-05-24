@@ -6,6 +6,11 @@ include __DIR__ . '/../header.php';
     <div class="formulario">
         <h2>REGISTRARSE</h2>
         <form action="index.php?action=registrar" method="POST">
+            <?php if (isset($error)): ?>
+                <div style="background-color: #ffcccc; color: #cc0000; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center; font-weight: bold;">
+                    <?php echo $error; ?>
+                </div>
+            <?php endif; ?>
             <div class="input-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" name="nombre" id="nombre" required>

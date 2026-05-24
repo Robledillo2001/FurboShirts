@@ -9,10 +9,8 @@
     use PHPMailer\PHPMailer\Exception;
 
     // Incluir las clases de PHPMailer
-
     require_once "./config.php";
-    
-    rutasMail();
+    rutasMail();//Metodo de config.php para agregar las clases de PHPMailer
 
     class cliente_controlador{
         public function inicio(){//Metodo con la vista de inicio

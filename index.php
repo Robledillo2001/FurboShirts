@@ -82,6 +82,8 @@
     "EditarPerfil"=>$usuario,
     "EditarUsuario"=>$usuario,
     "CambiarIMGPerfil"=>$usuario,
+    "solicitarRecuperacion"=>$usuario,
+    "restablecerPassword"=>$usuario,
    ];
 
     $action=$_GET['action']??"inicio";

@@ -1,5 +1,12 @@
 <?php
     require_once "modelo/usuario_modelo.php";
+    //Excepciones del PHPMAILER
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
+    // Incluir las clases de PHPMailer
+    require_once "./config.php";
+    rutasMail();//Metodo de config.php para agregar las clases de PHPMailer
     class usuarios_controlador{
         private function checkAdmin(){//Metodo privado que se usaran en los metodos que use el admin para que el Cliente y el Visitante no puedan acceder
             if(!isset($_SESSION['ROL']) || $_SESSION['ROL'] !== "admin"){
@@ -118,23 +125,24 @@
                 $modelo=new Usuarios();
 
                 if(!empty($passwd)&&!empty($passwd2)){
-                    if($passwd===$passwd2){
+                    if($passwd===$passwd2&&strlen($passwd) >= 8){
                         $passwdHash=password_hash($passwd,PASSWORD_DEFAULT) ?? "";
                     }else{
-                        header("Location: index.php?action=configuracion&error=pass");
-                        exit();
+                       $error = "Las contraseñas no coinciden o tienen menos de 8 caracteres.";
                     }
                 }
-                $modelo->editarPerfil($id,$nombre,$apellidos,$nombreUser,$correo,$passwdHash);
+                if(!isset($error)){
+                    $modelo->editarPerfil($id,$nombre,$apellidos,$nombreUser,$correo,$passwdHash);
 
-                $_SESSION['nombre'] = (!empty($nombreUser)) ? $nombreUser : $_SESSION['nombre'];
-                $_SESSION['nombre_real']=(!empty($nombre)) ? $nombre : $_SESSION['nombre_real'];
-                $_SESSION['apellidos']=(!empty($apellidos)) ? $apellidos : $_SESSION['apellidos'];
-                $_SESSION['correo']=(!empty($correo)) ? $correo : $_SESSION['correo'];
+                    $_SESSION['nombre'] = (!empty($nombreUser)) ? $nombreUser : $_SESSION['nombre'];
+                    $_SESSION['nombre_real']=(!empty($nombre)) ? $nombre : $_SESSION['nombre_real'];
+                    $_SESSION['apellidos']=(!empty($apellidos)) ? $apellidos : $_SESSION['apellidos'];
+                    $_SESSION['correo']=(!empty($correo)) ? $correo : $_SESSION['correo'];
 
 
-                header("Location: index.php?action=configuracion&success=1");
-                exit();
+                    header("Location: index.php?action=configuracion&success=1");
+                    exit();
+                }
             }
             require_once "vista/usuarios/EditarPerfil.php";
         }
@@ -250,7 +258,7 @@
                 $nombre = $_POST['nombre'];
                 $apellidos = $_POST['apellidos'];
                 $correo = filter_var($_POST['correo'],FILTER_SANITIZE_EMAIL);
-                $passwd = password_hash($_POST['passwd'], PASSWORD_DEFAULT); 
+                $passwd = $_POST['passwd'] ?? ''; 
                 $nombreUser = $_POST['nombreUser'];
 
                 // Validamos que el correo sea correcto antes de continuar
@@ -258,16 +266,20 @@
                     die("Error: El formato del correo electrónico no es válido.");
                 }
 
-                //Llamada al metodo del modelo
-                $modelo = new Usuarios();
-                $modelo->registrar($nombre, $apellidos, $correo, $passwd, $nombreUser);
+                if(strlen($passwd) >= 8){
+                    $passwdHash=password_hash($passwd, PASSWORD_DEFAULT);
+                    //Llamada al metodo del modelo
+                    $modelo = new Usuarios();
+                    $modelo->registrar($nombre, $apellidos, $correo, $passwdHash, $nombreUser);
 
-                // Redirige al login al registrar usuario
-                header("Location: index.php?action=login");
-                exit();//Finaliza la ejecucion del script para que ocurra la redireccion
-            } else {
-                require_once "vista/usuarios/registrar.php";
+                    // Redirige al login al registrar usuario
+                    header("Location: index.php?action=login");
+                    exit();//Finaliza la ejecucion del script para que ocurra la redireccion
+                }else{
+                    $error = "Las contraseñas no coinciden o tienen menos de 8 caracteres.";
+                }
             }
+             require_once "vista/usuarios/registrar.php";
         }
 
         public function logout(){
@@ -277,6 +289,101 @@
 
             header("Location: index.php?action=login");//Redirije al login
             exit();//Finaliza la ejecucion del script para que ocurra la redireccion
+        }
+
+        public function solicitarRecuperacion(){//Metodo para Generar un token y mandar un correo 
+            if($_SERVER['REQUEST_METHOD']==='POST'){
+                // Capturamos el correo del formulario POST
+                $correo = filter_var($_POST['correo'], FILTER_VALIDATE_EMAIL);
+
+                if($correo){
+                    $modelo=new Usuarios();
+
+                    //Generamos un token seguro de 64 caracteres
+                    $token=bin2hex(random_bytes(32));
+                    //Tiempo de vida el enlace: 2horas
+                    $expiracion=date("Y-m-d H:i:s", strtotime("+2 hours"));
+
+                    //Guardar los datos del token en la BSD
+                    $modelo->registrarTokenRecuperacion($correo,$token,$expiracion);
+
+                    //Construccion de la URL
+                    $url=rutasURLRecuperacion($token,$correo);//Metodo para contruir una URL segun si estamos en el dominio o en local en config.php
+
+                    //Envio con PHPMailer
+                    $mail=new PHPMailer(true);
+
+                    try{
+                        // ACTIVAR SMTP (Crucial para que conecte con Gmail)
+                        $mail->isSMTP(); 
+
+                        // Configuración del servidor SMTP
+                        $mail->Host       = 'smtp.gmail.com'; 
+                        $mail->SMTPAuth   = true;
+                        $mail->Username   = 'lopezreinarobledilloruben@gmail.com'; 
+                        $mail->Password   = 'qqwp zfzv agys nqfa'; // Tu contraseña de aplicación segura
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                        $mail->Port       = 587;
+                        $mail->CharSet    = 'UTF-8'; // Mantiene tildes y eñes correctamente
+
+                        $mail->setFrom('lopezreinarobledilloruben@gmail.com', 'FurboShirts Tienda Deportiva');
+                        $mail->addAddress($correo);
+
+                        $mail->isHTML(true);
+                        $mail->Subject = 'Recuperacion de contrasena - FurboShirts';
+                        $mail->Body    = "<h3>Restablece tu cuenta</h3>
+                                        <p>Has solicitado un cambio de contraseña. Haz clic en el siguiente enlace para continuar:</p>
+                                        <p><a href='{$url}'>Cambiar mi contraseña aquí</a></p>
+                                        <p>Este enlace caducará en 2 horas.</p>";
+                        
+                        $mail->send();
+                        $success = "Si el correo existe, recibirás un enlace en unos instantes.";
+                    }catch(Exception $e){
+                        $error="Error al enviar el correo de recuperacion";
+                    }
+                }
+            }
+            require_once "vista/usuarios/solicitar.php";
+        }
+
+        public function restablecerPassword(){//Metodo para Actualizar la contraseña
+            //Leemos las variables directas de la URL
+            $correo =$_GET['e']?? $_POST['correo']??'';
+            $tokenURL=$_GET['t']?? $_POST['token'] ?? '';
+
+            if(empty($correo)||empty($tokenURL)){
+                die("Acceso denegado");
+            }
+
+            $modelo=new Usuarios();
+            $datosToken=$modelo->verificarTokenUsuario($correo);
+
+            //Compararemos la fecha actual con la fecha del token
+            $fechaActual=date("Y-m-d H:i:s");
+
+            if (!$datosToken || $datosToken['TOKEN_RECUPERACION'] !== $tokenURL || $fechaActual > $datosToken['EXPIRACION_TOKEN']) {
+                die("El enlace de recuperación es inválido o ya ha caducado.");
+            }
+
+            //Si la validacion es correcta y el usuario envia el fomrulario con su nueva clave
+            if($_SERVER['REQUEST_METHOD']==="POST"){
+                $pass1=$_POST['passwd']??'';
+                $pass2=$_POST['passwd2']??'';
+
+                if ($pass1 === $pass2 && strlen($pass1) >= 8) {
+                    // Hasheamos la contraseña nueva
+                    $nuevoHash = password_hash($pass1, PASSWORD_DEFAULT);
+                    
+                    // Actualiza en usuarios y limpia el token para que no se pueda reutilizar
+                    $modelo->actualizarContraseña($correo, $nuevoHash);
+                    
+                    header("Location: index.php?action=login&msg=success_password");
+                    exit();
+                } else {
+                    $error = "Las contraseñas no coinciden o tienen menos de 8 caracteres.";
+                }
+            }
+            require_once "vista/usuarios/cambiar_password.php";
         }
     }
 ?>
