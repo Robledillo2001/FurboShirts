@@ -268,6 +268,10 @@
     .nosotros-hero h1 {
         font-size: 1.8rem;
     }
+
+    .info-links a{
+        padding: 18px 0;
+    }
     
     .contacto-form {
         padding: 25px 20px;

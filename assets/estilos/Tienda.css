@@ -380,9 +380,87 @@
     width: 50%;
     margin: 0 auto;
 }
+/* =====================================================
+   RESPONSIVE DESIGN (MEDIA QUERIES)
+   ===================================================== */
 
-@media (max-width: 600px) {
-    .enlaces {
+/* Tablets y pantallas medianas (Menos de 992px) */
+@media (max-width: 992px) {
+    .admin-dashboard {
+        padding: 24px 20px 40px;
+    }
+
+    .admin-name {
+        font-size: 1.7rem;
+    }
+}
+
+/* Teléfonos inteligentes en formato horizontal y pantallas pequeñas (Menos de 768px) */
+@media (max-width: 768px) {
+    .admin-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        padding: 28px 24px;
+    }
+
+    .admin-hero-right {
+        align-items: flex-start;
+        width: 100%;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding-top: 20px;
+    }
+
+    .admin-hero-avatar {
+        width: 68px;
+        height: 68px;
+    }
+
+    .admin-name {
+        font-size: 1.5rem;
+    }
+
+    .admin-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .admin-cards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
+    }
+}
+
+/* Teléfonos móviles muy pequeños (Menos de 480px) */
+@media (max-width: 480px) {
+    .admin-hero-left {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .admin-cards-grid {
+        /* En pantallas diminutas, transformamos las tarjetas a una sola columna estirada */
         grid-template-columns: 1fr;
+    }
+
+    .admin-quick-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .admin-quick-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Ajustes sobre el contenedor Legacy antiguo */
+    .enlaces {
+        grid-template-columns: 1fr !important;
+    }
+
+    .enlace:last-child:nth-child(odd) {
+        width: 100% !important;
     }
 }
