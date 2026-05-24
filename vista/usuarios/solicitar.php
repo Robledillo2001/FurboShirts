@@ -9,7 +9,7 @@ include __DIR__ . '/../header.php';
                 <?php echo $error; ?>
             </div>
         <?php endif; ?>
-        <h2>Solicitar Recuperacion contraseña</h2>
+        <h2>SOLICITAR RECUPERACION DE CONTRASEÑA</h2>
         <form action="index.php?action=solicitarRecuperacion" method="POST">
             <div class="input-group">
                 <label for="correo">Correo Electronico</label>
