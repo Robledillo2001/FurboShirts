@@ -225,9 +225,9 @@
                     $_SESSION['IMAGEN'] = $datosUsuario['IMAGEN_USER'];
                     //Si se le dio a la opcion de recordar se guardara una cookie que dure 30 dias
                     if($recordar){
-                        setcookie($_SESSION['id'],$_SESSION['nombre'],time()+(30*24*60*60),"/");//Creamos una cookie que dure 30 días
+                        setcookie("furboshirts_remember_me",$_SESSION['nombre'],time()+(30*24*60*60),"/");//Creamos una cookie que dure 30 días
                     }else{
-                        setcookie($_SESSION['id'],$_SESSION['nombre'],time()-3600, "/");//Si no marco la casilla, borramos la cookie (poniendo pasado)
+                        setcookie("furboshirts_remember_me",$_SESSION['nombre'],time()-3600, "/");//Si no marco la casilla, borramos la cookie (poniendo pasado)
                     }
 
                     if($datosUsuario['ROL']!=='admin'){//Si no es un admin se redirigira al inicio de la pagina
