@@ -214,6 +214,7 @@
                 $datosUsuario = $modelo->login($usuarioInput, $passwd);
 
                 if($datosUsuario){
+                    session_regenerate_id(true);//Se usa session_regenerate_id para evitar el ataque de Sesion Fija y el id de login antiguo deje de ser valido 
                     // GUARDAR TODO EN LA SESIÓN (Importante para el header y editar los datos del usuario en un futuro)
                     $_SESSION['id'] = $datosUsuario['ID_USUARIO'];
                     $_SESSION['nombre'] = $datosUsuario['NOMBRE_USUARIO'];
