@@ -208,7 +208,7 @@
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $usuarioInput = $_POST['usuario'];
                 $passwd = $_POST['passwd'];
-                $recordar=$_POST['recordar']?$_POST['recordar']: null;
+                $recordar=$_POST['recordar']??null;
 
                 $modelo = new Usuarios();
                 $datosUsuario = $modelo->login($usuarioInput, $passwd);
@@ -231,16 +231,8 @@
                     }
 
                     if($datosUsuario['ROL']!=='admin'){//Si no es un admin se redirigira al inicio de la pagina
-                        if(isset($_SESSION['url'])){//Si encuentra una sesion con una url al agregar productos al carrito o hacer una valoracion
-                            $destino=$_SESSION['url'];
-                            unset($_SESSION['URL_PENDIENTE']); // Limpiamos para que no se repita
-                            header("Location: " . $destino);
-                            exit(); 
-                        }else{
-                            header("Location: index.php?action=inicio");
-                            exit(); 
-                        }
-                         
+                        header("Location: index.php?action=inicio");
+                        exit(); 
                     }else{//Si es admin se redirigira a su propio menu
                         header("Location: index.php?action=MenuAdmin");
                         exit(); //Finaliza la ejecucion del script para que ocurra la redireccion
