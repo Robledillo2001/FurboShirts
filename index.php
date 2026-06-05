@@ -1,5 +1,13 @@
 <?php
     ob_start();
+    session_set_cookie_params([
+        'lifetime' => 86400,
+        'path' => '/',
+        'secure' => false, // Cambia a true si tu web usa https://
+        'httponly' => true,
+        'samesite' => 'Lax' 
+    ]);
+
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ERROR | E_PARSE |E_ALL);
